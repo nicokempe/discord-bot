@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 🗣️ Discord Chat
+    url: https://discord.com/invite/t9frQmmqPe
+    about: Ask questions and discuss with others on my Discord server.
+  - name: 💬 Questions & Discussions
+    url: https://github.com/NicoKempeEU/discord-bot/discussions
+    about: Use GitHub discussions for message-board style questions and discussions.
