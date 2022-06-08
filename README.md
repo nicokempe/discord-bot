@@ -28,9 +28,19 @@ In this repository we keep the current state of development of the Discord Bot m
 ---
 
 ### 🌙 Planned Features
-- Backup system 
-- Control panel with 2FA and server customization options
-- Maintenance system
+- Backup System
+- Maintenance System
+- Online Permissions
+- Data for the webpage
+- Giveaway System
+- Online Messages sent by the Bot
+- Welcome messages (Channel)
+- Welcome messages (Privat)
+- Application system
+- Name checks (for bad words and special characters)
+- Chat filter (for bad words, advertising)
+- Ticket System / Report System
+- Custom commands (e.g. !youtube)
 
 ---
 
