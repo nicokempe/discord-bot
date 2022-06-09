@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>DiscordBot</artifactId>
+        <groupId>eu.nicokempe</groupId>
+        <version>2022.6.1-DEV</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>permissions-module-api</artifactId>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>eu.nicokempe</groupId>
+            <artifactId>parent-api</artifactId>
+            <version>2022.6.1-DEV</version>
+        </dependency>
+    </dependencies>
+
+</project>

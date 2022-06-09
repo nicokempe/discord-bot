@@ -12,6 +12,8 @@
         <module>parent-api</module>
         <module>parent-bot</module>
         <module>test-module</module>
+        <module>permissions-module</module>
+        <module>permissions-module-api</module>
     </modules>
 
     <properties>
@@ -67,7 +69,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>eu.nicokempe.discordbot.DiscordBot</mainClass>
+                            <mainClass>eu.nicokempe.discordbot.Main</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
