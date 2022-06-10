@@ -15,11 +15,21 @@ public class DiscordUser implements IDiscordUser {
     private long id;
 
     @Override
+    public boolean isBot() {
+        return user.isBot();
+    }
+
+    @Override
     public void load(long id) {
         this.id = id;
         this.member = DiscordBot.INSTANCE.getGuild().getMemberById(id);
         if (member == null) throw new IllegalArgumentException("Member can not be null");
         this.user = member.getUser();
+    }
+
+    @Override
+    public String getIdString() {
+        return String.valueOf(id);
     }
 
     @Override
