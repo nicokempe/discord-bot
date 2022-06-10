@@ -3,8 +3,11 @@ package eu.nicokempe.discordbot;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import eu.nicokempe.discordbot.command.handler.ICommandManager;
+import eu.nicokempe.discordbot.command.manager.CommandManager;
 import eu.nicokempe.discordbot.listener.JoinListener;
 import eu.nicokempe.discordbot.listener.ReadyListener;
+import eu.nicokempe.discordbot.listener.SlashListener;
 import eu.nicokempe.discordbot.logger.Logger;
 import eu.nicokempe.discordbot.module.IModuleLoader;
 import eu.nicokempe.discordbot.module.ModuleLoader;
@@ -44,6 +47,7 @@ public class DiscordBot implements IDiscordBot {
     private final List<IDiscordUser> discordUsers = new ArrayList<>();
 
     private IModuleLoader moduleLoader;
+    private ICommandManager commandManager;
 
     private JDA jda;
     private Guild guild;
@@ -57,6 +61,8 @@ public class DiscordBot implements IDiscordBot {
     public void enable() {
         new Logger();
         System.out.println("Loading bot...");
+
+        commandManager = new CommandManager();
 
         String token = getResourceFileAsString();
 
@@ -74,7 +80,8 @@ public class DiscordBot implements IDiscordBot {
                 setStatus(OnlineStatus.ONLINE).
                 addEventListeners(
                         new ReadyListener(),
-                        new JoinListener()
+                        new JoinListener(),
+                        new SlashListener()
                 ).
                 setRawEventsEnabled(true).
                 setMemberCachePolicy(MemberCachePolicy.ALL).
@@ -104,8 +111,13 @@ public class DiscordBot implements IDiscordBot {
                     ex.printStackTrace();
                 }
             }
-            System.out.println("Bot enabled.");
         });
+    }
+
+    private void loadCommands() {
+        System.out.println("Loading commands...");
+        commandManager.loadCommands();
+        System.out.println("Bot enabled.");
     }
 
     @Override
