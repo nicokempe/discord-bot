@@ -53,12 +53,15 @@ public class ModuleLoader implements IModuleLoader {
                 }
                 String className = properties.getProperty("main");
                 Class<?> pluginClass = loader.loadClass(className);
+
                 ModuleInterface moduleInterface = (ModuleInterface) pluginClass.getDeclaredConstructor().newInstance();
                 moduleInterface.setProperties(properties);
                 moduleInterface.setDiscordBot(DiscordBot.INSTANCE);
+
+                System.out.println(MessageFormat.format("Loading {0} v{1}", properties.getProperty("name"), properties.getProperty("version")));
+
                 moduleInterface.enable();
                 this.modules.add(moduleInterface);
-                System.out.println(MessageFormat.format("Loading {0} v{1}", properties.getProperty("name"), properties.getProperty("version")));
             }
         }
 
