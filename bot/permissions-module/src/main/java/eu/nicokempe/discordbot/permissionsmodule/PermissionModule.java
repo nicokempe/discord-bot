@@ -4,12 +4,16 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import eu.nicokempe.discordbot.module.ModuleInterface;
+import eu.nicokempe.discordbot.permissionsmodule.commands.PushCommand;
 import eu.nicokempe.discordbot.permissionsmodule.groups.GroupMember;
 import eu.nicokempe.discordbot.permissionsmodule.groups.PermissionGroup;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.exceptions.ContextException;
+import net.dv8tion.jda.api.exceptions.HierarchyException;
 import okhttp3.FormBody;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +23,8 @@ public class PermissionModule extends ModuleInterface {
 
     @Override
     public void enable() {
+        getDiscordBot().getCommandManager().addCommand(new PushCommand("push"));
+
         for (JsonElement roles : getDiscordBot().get("roles").getAsJsonArray()) {
             JsonObject jsonObject = roles.getAsJsonObject();
             String id = jsonObject.get("id").getAsString();
@@ -34,24 +40,34 @@ public class PermissionModule extends ModuleInterface {
                 GroupMember groupMember = new GroupMember(memberId, timestamp);
                 group.getMember().add(groupMember);
             }
+            Role role = getDiscordBot().getGuild().getRoleById(group.getId());
+            if (role == null) {
+                //getDiscordBot().getGuild().createRole().setName(group.getName()).setColor(group.getColor()).queue(success -> group.setId(success.getId()));
+            }
 
             groups.add(group);
         }
 
         loadMember();
 
-        System.out.println(new Gson().toJson(groups));
     }
 
     private void loadMember() {
         for (PermissionGroup group : groups) {
             for (GroupMember groupMember : group.getMember()) {
                 Role role = getDiscordBot().getGuild().getRoleById(group.getId());
-                if (role == null) {
-                    role = getDiscordBot().getGuild().createRole().setName(group.getName()).setColor(group.getColor()).complete();
-                }
-                getDiscordBot().getGuild().addRoleToMember(groupMember.getId(), role).queue();
+                if (role == null)
+                    return;
+                addMember(role, groupMember.getId());
             }
+        }
+    }
+
+    private void addMember(Role role, String memberId) {
+        try {
+            getDiscordBot().getGuild().addRoleToMember(memberId, role).queue();
+        } catch (HierarchyException e) {
+            System.out.println(MessageFormat.format("Not allowed to change {0} role. Please change bot role above highest role!", role.getName()));
         }
     }
 
