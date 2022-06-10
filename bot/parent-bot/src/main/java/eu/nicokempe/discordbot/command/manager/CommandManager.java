@@ -18,7 +18,7 @@ public class CommandManager implements ICommandManager {
 
     @Override
     public void loadCommands() {
-        if(queue.isEmpty()) throw new IllegalArgumentException("No commands were added to queue");
+        if (queue.isEmpty()) return;
         CommandListUpdateAction commands = DiscordBot.INSTANCE.getGuild().updateCommands();
         for (AbstractCommand abstractCommand : queue) {
             commands.addCommands(toData(abstractCommand));
