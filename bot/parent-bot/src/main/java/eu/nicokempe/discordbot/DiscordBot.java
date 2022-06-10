@@ -111,6 +111,7 @@ public class DiscordBot implements IDiscordBot {
                     ex.printStackTrace();
                 }
             }
+            loadCommands();
         });
     }
 
