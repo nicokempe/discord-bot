@@ -3,9 +3,20 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </nav>
-  <Footer></Footer>
   <router-view></router-view>
+  <Footer></Footer>
 </template>
+
+<script>
+import Footer from '@/components/static/Footer.vue'
+
+export default {
+  name: 'Dashboard',
+  components: {
+    Footer
+  }
+}
+</script>
 
 <style>
 #app {
