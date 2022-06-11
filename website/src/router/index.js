@@ -74,73 +74,73 @@ const routes = [
   {
     path: '/dashboard',
     name: 'Dashboard',
-    component: function () { return import('../views/Dashboard.vue') }
+    component: function () { return import('../views/panel/Dashboard.vue') }
   },
   {
     path: '/statistics',
     name: 'Statistics',
-    component: function () { return import('../views/Statistics.vue') }
+    component: function () { return import('../views/panel/Statistics.vue') }
   },
   {
     path: '/update',
     name: 'Updater',
-    component: function () { return import('../views/modules/Updater.vue') }
+    component: function () { return import('../views/panel/modules/Updater.vue') }
   },
   // modular panel views
   {
     path: '/applications',
     name: 'Applications',
-    component: function () { return import('../views/modules/applications/Overview.vue') }
+    component: function () { return import('../views/panel/modules/applications/Overview.vue') }
   },
   {
     path: '/backups',
     name: 'Backups',
-    component: function () { return import('../views/modules/backups/Overview.vue') }
+    component: function () { return import('../views/panel/modules/backups/Overview.vue') }
   },
   {
     path: '/chat-filter',
     name: 'ChatFilter',
-    component: function () { return import('../views/modules/chat-filter/Overview.vue') }
+    component: function () { return import('../views/panel/modules/chat-filter/Overview.vue') }
   },
   {
     path: '/custom-commands',
     name: 'CustomCommands',
-    component: function () { return import('../views/modules/custom-commands/Overview.vue') }
+    component: function () { return import('../views/panel/modules/custom-commands/Overview.vue') }
   },
   {
     path: '/giveaways',
     name: 'Giveaways',
-    component: function () { return import('../views/modules/giveaways/Overview.vue') }
+    component: function () { return import('../views/panel/modules/giveaways/Overview.vue') }
   },
   {
     path: '/maintenance',
     name: 'Maintenance',
-    component: function () { return import('../views/modules/maintenance/Overview.vue') }
+    component: function () { return import('../views/panel/modules/maintenance/Overview.vue') }
   },
   {
     path: '/messages',
     name: 'Messages',
-    component: function () { return import('../views/modules/messages/Overview.vue') }
+    component: function () { return import('../views/panel/modules/messages/Overview.vue') }
   },
   {
     path: '/name-filter',
     name: 'NameFilter',
-    component: function () { return import('../views/modules/name-filter/Overview.vue') }
+    component: function () { return import('../views/panel/modules/name-filter/Overview.vue') }
   },
   {
     path: '/permissions',
     name: 'Permissions',
-    component: function () { return import('../views/modules/permissions/Overview.vue') }
+    component: function () { return import('../views/panel/modules/permissions/Overview.vue') }
   },
   {
     path: '/tickets',
     name: 'Tickets',
-    component: function () { return import('../views/modules/tickets/Overview.vue') }
+    component: function () { return import('../views/panel/modules/tickets/Overview.vue') }
   },
   {
     path: '/welcomes',
     name: 'Welcomes',
-    component: function () { return import('../views/modules/welcomes/Overview.vue') }
+    component: function () { return import('../views/panel/modules/welcomes/Overview.vue') }
   },
   /* {
     path: '/about',
