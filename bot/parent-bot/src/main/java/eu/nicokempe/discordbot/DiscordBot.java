@@ -52,8 +52,6 @@ public class DiscordBot implements IDiscordBot {
     private JDA jda;
     private Guild guild;
 
-    private Thread messageThread;
-
     public DiscordBot() {
         INSTANCE = this;
     }
@@ -106,34 +104,6 @@ public class DiscordBot implements IDiscordBot {
         jda.setAutoReconnect(true);
         jda.awaitReady();
 
-        messageThread = new Thread(() -> {
-            while (true) {
-                if (guild == null) return;
-                for (JsonElement element : RequestBuilder.builder().route("messages").build().get().getAsJsonArray()) {
-                    JsonObject object = element.getAsJsonObject();
-
-                    if (!object.has("message") || !object.has("channel") || !object.has("id")) {
-                        continue;
-                    }
-
-                    String message = object.get("message").getAsString();
-                    long channel = object.get("channel").getAsLong();
-                    long schedule = object.get("schedule").getAsLong();
-                    String id = object.get("id").getAsString();
-
-                    if (schedule > System.currentTimeMillis()) return;
-                    guild.getTextChannelById(channel).sendMessage(message).queue();
-                    RequestBuilder.builder().route("messages").body(new FormBody.Builder().add("id", id)).authKey(authKey).build().delete();
-                }
-                try {
-                    Thread.sleep(1000 * 10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, "message");
-
-        messageThread.start();
     }
 
     @Override
@@ -162,13 +132,11 @@ public class DiscordBot implements IDiscordBot {
         System.out.println("Loading commands...");
         commandManager.loadCommands();
         System.out.println("Bot enabled.");
-
     }
 
     @Override
     public long getGuildId() {
         return RequestBuilder.builder().route("guild").build().get().getAsJsonObject().get("guildId").getAsLong();
-        //return get("guild").getAsJsonObject().get("guildId").getAsLong();
     }
 
     @Override

@@ -21,7 +21,7 @@ public class JoinListener extends ListenerAdapter {
         //DiscordBot.INSTANCE.sendPost("userJoin", new FormBody.Builder().add("name", user.getName()).add("discordId", user.getId()).build());
 
         String avatar = user.getAvatarUrl() == null ? "" : user.getAvatarUrl();
-        RequestBuilder.builder().route("userJoin").body(new FormBody.Builder().add("name", user.getName()).add("discordId", user.getId()).add("avatar", avatar)).authKey(((DiscordBot) DiscordBot.INSTANCE).getAuthKey()).build().post();
+        RequestBuilder.builder().route("userJoin").body(new FormBody.Builder().add("name", user.getName()).add("discordId", user.getId()).add("avatar", avatar)).authKey(DiscordBot.INSTANCE.getAuthKey()).build().post();
 
         IDiscordUser discordUser = new DiscordUser();
         discordUser.load(user.getIdLong());

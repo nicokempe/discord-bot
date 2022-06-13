@@ -64,8 +64,8 @@ public class ReadyListener extends ListenerAdapter {
 
             /*DiscordBot.INSTANCE.sendPost("currentUser", new FormBody.Builder().add("member", new Gson().toJson(currentUser)).build());
             DiscordBot.INSTANCE.sendPost("currentChannel", new FormBody.Builder().add("channel", new Gson().toJson(currentChannel)).build());*/
-            RequestBuilder.builder().route("currentUser").body(new FormBody.Builder().add("member", new Gson().toJson(currentUser))).authKey(((DiscordBot) DiscordBot.INSTANCE).getAuthKey()).build().post();
-            RequestBuilder.builder().route("currentChannel").body(new FormBody.Builder().add("channel", new Gson().toJson(currentChannel))).authKey(((DiscordBot) DiscordBot.INSTANCE).getAuthKey()).build().post();
+            RequestBuilder.builder().route("currentUser").body(new FormBody.Builder().add("member", new Gson().toJson(currentUser))).authKey(DiscordBot.INSTANCE.getAuthKey()).build().post();
+            RequestBuilder.builder().route("currentChannel").body(new FormBody.Builder().add("channel", new Gson().toJson(currentChannel))).authKey(DiscordBot.INSTANCE.getAuthKey()).build().post();
 
             DiscordBot.INSTANCE.loadModules();
         });

@@ -53,6 +53,8 @@ public interface IDiscordBot {
         return (int) Math.ceil(Math.random() * max);
     }
 
+    AuthKey getAuthKey();
+
     @AllArgsConstructor
     @Getter
     class AuthKey {

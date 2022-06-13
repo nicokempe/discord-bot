@@ -12,8 +12,10 @@
         <module>parent-api</module>
         <module>parent-bot</module>
         <module>test-module</module>
-        <module>permissions-module</module>
-        <module>permissions-module-api</module>
+        <module>module-permissions</module>
+        <module>module-permissions-api</module>
+        <module>module-messenger</module>
+        <module>module-messenger-api</module>
     </modules>
 
     <properties>
