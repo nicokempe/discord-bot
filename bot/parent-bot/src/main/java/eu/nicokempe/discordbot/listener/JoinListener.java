@@ -1,6 +1,7 @@
 package eu.nicokempe.discordbot.listener;
 
 import eu.nicokempe.discordbot.DiscordBot;
+import eu.nicokempe.discordbot.request.RequestBuilder;
 import eu.nicokempe.discordbot.user.DiscordUser;
 import eu.nicokempe.discordbot.user.IDiscordUser;
 import net.dv8tion.jda.api.entities.Member;
@@ -17,7 +18,10 @@ public class JoinListener extends ListenerAdapter {
         Member member = event.getMember();
         User user = member.getUser();
 
-        DiscordBot.INSTANCE.sendPost("userJoin", new FormBody.Builder().add("name", user.getName()).add("discordId", user.getId()).build());
+        //DiscordBot.INSTANCE.sendPost("userJoin", new FormBody.Builder().add("name", user.getName()).add("discordId", user.getId()).build());
+
+        String avatar = user.getAvatarUrl() == null ? "" : user.getAvatarUrl();
+        RequestBuilder.builder().route("userJoin").body(new FormBody.Builder().add("name", user.getName()).add("discordId", user.getId()).add("avatar", avatar)).authKey(((DiscordBot) DiscordBot.INSTANCE).getAuthKey()).build().post();
 
         IDiscordUser discordUser = new DiscordUser();
         discordUser.load(user.getIdLong());

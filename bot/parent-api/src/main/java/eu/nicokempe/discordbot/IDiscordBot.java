@@ -5,6 +5,8 @@ import com.google.gson.JsonObject;
 import eu.nicokempe.discordbot.command.handler.ICommandManager;
 import eu.nicokempe.discordbot.module.IModuleLoader;
 import eu.nicokempe.discordbot.user.IDiscordUser;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import okhttp3.RequestBody;
@@ -19,15 +21,11 @@ public interface IDiscordBot {
 
     void loadModules();
 
-    void sendPost(String typ, RequestBody body);
-
     long getGuildId();
 
     void setGuild(Guild guild);
 
     IModuleLoader getModuleLoader();
-
-    JsonElement get(String typ);
 
     Guild getGuild();
 
@@ -53,6 +51,13 @@ public interface IDiscordBot {
 
     private static int getInt(int max) {
         return (int) Math.ceil(Math.random() * max);
+    }
+
+    @AllArgsConstructor
+    @Getter
+    class AuthKey {
+        private final String key;
+        private final long timestamp;
     }
 
 }

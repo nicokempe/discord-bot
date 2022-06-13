@@ -2,21 +2,22 @@ package eu.nicokempe.discordbot.listener;
 
 import com.google.gson.Gson;
 import eu.nicokempe.discordbot.DiscordBot;
+import eu.nicokempe.discordbot.IDiscordBot;
 import eu.nicokempe.discordbot.channel.ChannelEntry;
+import eu.nicokempe.discordbot.request.RequestBuilder;
 import eu.nicokempe.discordbot.user.DiscordUser;
 import eu.nicokempe.discordbot.user.IDiscordUser;
 import eu.nicokempe.discordbot.user.UserEntry;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.GuildChannel;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import okhttp3.FormBody;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,7 +48,7 @@ public class ReadyListener extends ListenerAdapter {
                                     user.getUser().getAvatarUrl(),
                                     user.getName(),
                                     user.getNickname(),
-                                    System.currentTimeMillis(),
+                                    user.getMember().getTimeJoined().toInstant().toEpochMilli(),
                                     user.isBot()
                             )).collect(Collectors.toList())
             );
@@ -61,8 +62,10 @@ public class ReadyListener extends ListenerAdapter {
                             )).collect(Collectors.toList())
             );
 
-            DiscordBot.INSTANCE.sendPost("currentUser", new FormBody.Builder().add("member", new Gson().toJson(currentUser)).build());
-            DiscordBot.INSTANCE.sendPost("currentChannel", new FormBody.Builder().add("channel", new Gson().toJson(currentChannel)).build());
+            /*DiscordBot.INSTANCE.sendPost("currentUser", new FormBody.Builder().add("member", new Gson().toJson(currentUser)).build());
+            DiscordBot.INSTANCE.sendPost("currentChannel", new FormBody.Builder().add("channel", new Gson().toJson(currentChannel)).build());*/
+            RequestBuilder.builder().route("currentUser").body(new FormBody.Builder().add("member", new Gson().toJson(currentUser))).authKey(((DiscordBot) DiscordBot.INSTANCE).getAuthKey()).build().post();
+            RequestBuilder.builder().route("currentChannel").body(new FormBody.Builder().add("channel", new Gson().toJson(currentChannel))).authKey(((DiscordBot) DiscordBot.INSTANCE).getAuthKey()).build().post();
 
             DiscordBot.INSTANCE.loadModules();
         });

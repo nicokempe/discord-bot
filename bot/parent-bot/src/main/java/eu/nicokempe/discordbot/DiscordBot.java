@@ -1,8 +1,8 @@
 package eu.nicokempe.discordbot;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import eu.nicokempe.discordbot.command.handler.ICommandManager;
 import eu.nicokempe.discordbot.command.manager.CommandManager;
 import eu.nicokempe.discordbot.listener.JoinListener;
@@ -11,7 +11,9 @@ import eu.nicokempe.discordbot.listener.SlashListener;
 import eu.nicokempe.discordbot.logger.Logger;
 import eu.nicokempe.discordbot.module.IModuleLoader;
 import eu.nicokempe.discordbot.module.ModuleLoader;
+import eu.nicokempe.discordbot.request.RequestBuilder;
 import eu.nicokempe.discordbot.user.IDiscordUser;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -29,9 +31,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.SocketTimeoutException;
-import java.net.URL;
 import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -43,6 +42,7 @@ import java.util.stream.Collectors;
 public class DiscordBot implements IDiscordBot {
 
     public static IDiscordBot INSTANCE;
+    protected AuthKey authKey;
 
     private final List<IDiscordUser> discordUsers = new ArrayList<>();
 
@@ -52,14 +52,29 @@ public class DiscordBot implements IDiscordBot {
     private JDA jda;
     private Guild guild;
 
+    private Thread messageThread;
+
     public DiscordBot() {
         INSTANCE = this;
     }
 
-    @SneakyThrows
     @Override
     public void enable() {
         new Logger();
+        RequestBuilder.builder().route("login").body(new FormBody.Builder().add("name", "Admin").add("password", "123456")).response(response -> {
+            if (response.isSuccessful()) {
+                try {
+                    authKey = new Gson().fromJson(response.body().string(), DiscordBot.AuthKey.class);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                init();
+            }
+        }).build().post();
+    }
+
+    @SneakyThrows
+    private void init() {
         System.out.println("Loading bot...");
 
         commandManager = new CommandManager();
@@ -91,6 +106,34 @@ public class DiscordBot implements IDiscordBot {
         jda.setAutoReconnect(true);
         jda.awaitReady();
 
+        messageThread = new Thread(() -> {
+            while (true) {
+                if (guild == null) return;
+                for (JsonElement element : RequestBuilder.builder().route("messages").build().get().getAsJsonArray()) {
+                    JsonObject object = element.getAsJsonObject();
+
+                    if (!object.has("message") || !object.has("channel") || !object.has("id")) {
+                        continue;
+                    }
+
+                    String message = object.get("message").getAsString();
+                    long channel = object.get("channel").getAsLong();
+                    long schedule = object.get("schedule").getAsLong();
+                    String id = object.get("id").getAsString();
+
+                    if (schedule > System.currentTimeMillis()) return;
+                    guild.getTextChannelById(channel).sendMessage(message).queue();
+                    RequestBuilder.builder().route("messages").body(new FormBody.Builder().add("id", id)).authKey(authKey).build().delete();
+                }
+                try {
+                    Thread.sleep(1000 * 10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, "message");
+
+        messageThread.start();
     }
 
     @Override
@@ -104,7 +147,7 @@ public class DiscordBot implements IDiscordBot {
         moduleLoader = new ModuleLoader();
         System.out.println("Loading modules...");
         moduleLoader.loadModules(e -> {
-            if(e != null && !(e instanceof NoSuchFileException)) {
+            if (e != null && !(e instanceof NoSuchFileException)) {
                 try {
                     throw e;
                 } catch (Exception ex) {
@@ -119,30 +162,13 @@ public class DiscordBot implements IDiscordBot {
         System.out.println("Loading commands...");
         commandManager.loadCommands();
         System.out.println("Bot enabled.");
+
     }
 
     @Override
     public long getGuildId() {
-        return get("guild").getAsJsonObject().get("guildId").getAsLong();
-    }
-
-    @Override
-    public JsonElement get(String typ) {
-        URL url;
-        try {
-            url = new URL("http://45.93.249.108:8085/api/" + typ);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            return null;
-        }
-        InputStreamReader reader;
-        try {
-            reader = new InputStreamReader(url.openStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return JsonParser.parseReader(reader);
+        return RequestBuilder.builder().route("guild").build().get().getAsJsonObject().get("guildId").getAsLong();
+        //return get("guild").getAsJsonObject().get("guildId").getAsLong();
     }
 
     @Override
@@ -153,23 +179,6 @@ public class DiscordBot implements IDiscordBot {
     @Override
     public IDiscordUser getUser(long id) {
         return discordUsers.stream().filter(iDiscordUser -> iDiscordUser.getId() == id).findFirst().orElse(null);
-    }
-
-    @SneakyThrows
-    public void sendPost(String typ, RequestBody formBody) {
-
-        Request request = new Request.Builder()
-                .url("http://45.93.249.108:8085/api/" + typ)
-                .post(formBody)
-                .build();
-
-        OkHttpClient httpClient = new OkHttpClient();
-
-        try (Response response = httpClient.newCall(request).execute()) {
-            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-        } catch (SocketTimeoutException e) {
-            System.out.println("Timeout");
-        }
     }
 
     private String getResourceFileAsString() throws IOException {

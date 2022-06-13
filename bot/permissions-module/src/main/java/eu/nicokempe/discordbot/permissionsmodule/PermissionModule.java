@@ -7,6 +7,7 @@ import eu.nicokempe.discordbot.module.ModuleInterface;
 import eu.nicokempe.discordbot.permissionsmodule.commands.PushCommand;
 import eu.nicokempe.discordbot.permissionsmodule.groups.GroupMember;
 import eu.nicokempe.discordbot.permissionsmodule.groups.PermissionGroup;
+import eu.nicokempe.discordbot.request.RequestBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.exceptions.ContextException;
@@ -25,7 +26,7 @@ public class PermissionModule extends ModuleInterface {
     public void enable() {
         getDiscordBot().getCommandManager().addCommand(new PushCommand("push"));
 
-        for (JsonElement roles : getDiscordBot().get("roles").getAsJsonArray()) {
+        for (JsonElement roles : RequestBuilder.builder().route("roles").build().get().getAsJsonArray()) {
             JsonObject jsonObject = roles.getAsJsonObject();
             String id = jsonObject.get("id").getAsString();
             String name = jsonObject.get("name").getAsString();
