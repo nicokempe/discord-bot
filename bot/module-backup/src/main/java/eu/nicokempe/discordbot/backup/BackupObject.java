@@ -6,10 +6,9 @@ import com.google.gson.JsonObject;
 import eu.nicokempe.discordbot.request.RequestBuilder;
 import lombok.Getter;
 import lombok.Setter;
-import net.dv8tion.jda.api.entities.Category;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.GuildChannel;
-import net.dv8tion.jda.api.entities.PermissionOverride;
+import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.internal.entities.MemberImpl;
+import net.dv8tion.jda.internal.entities.PermissionOverrideImpl;
 import okhttp3.FormBody;
 
 import java.util.ArrayList;
@@ -25,14 +24,9 @@ public class BackupObject implements IBackupObject {
     private final List<BackupEntry> backups = new ArrayList<>();
     private long backupInterval = -1L;
 
-    private final Guild guild;
-
-    public BackupObject() {
-        guild = Backup.INSTANCE.getDiscordBot().getGuild();
-    }
-
     @Override
     public void load() {
+        backups.clear();
         JsonObject backupRequest = RequestBuilder.builder().route("backups").authKey(Backup.INSTANCE.getDiscordBot().getAuthKey()).build().get().getAsJsonObject();
         backupInterval = backupRequest.get("backupInterval").getAsLong();
 
@@ -55,12 +49,39 @@ public class BackupObject implements IBackupObject {
     }
 
     @Override
-    public void saveBackup(Consumer<BackupEntry> onFinish) {
-        BackupEntry entry = new BackupEntry();
+    public void saveBackup(long creator, Consumer<BackupEntry> onFinish) {
+        BackupEntry entry = new BackupEntry(String.valueOf(creator));
 
-        entry.getVoiceChannel().addAll(getPermissionEntry(getPermissionOverride(new ArrayList<>(guild.getVoiceChannels()))));
-        entry.getTextChannel().addAll(getPermissionEntry(getPermissionOverride(new ArrayList<>(guild.getTextChannels()))));
-        entry.getCategories().addAll(getPermissionEntry(getPermissionOverride(new ArrayList<>(guild.getCategories()))));
+        Guild guild = Backup.INSTANCE.getDiscordBot().getGuild();
+
+        for (GuildChannel channel : guild.getChannels()) {
+
+            Category channelCategory = guild.getCategories().
+                    stream().
+                    filter(category ->
+                            category.getChannels().
+                                    stream().
+                                    anyMatch(categoryChannel ->
+                                            channel.getIdLong() == categoryChannel.getIdLong())).
+                    findFirst().
+                    orElse(null);
+
+            BackupChannel backupChannel = new BackupChannel(
+                    channel.getId(),
+                    channel.getType(),
+                    channel.getName(),
+                    channel.getType().equals(ChannelType.TEXT) ? ((TextChannel) channel).getTopic() : null,
+                    channelCategory == null ? null : channelCategory.getName(),
+                    channel.getPosition(),
+                    channel.getType().equals(ChannelType.TEXT) && ((TextChannel) channel).isNSFW(),
+                    channel.getType().equals(ChannelType.TEXT) && ((TextChannel) channel).isNews(),
+                    channel.getType().equals(ChannelType.VOICE) ? ((VoiceChannel) channel).getUserLimit() : 0,
+                    channel.getType().equals(ChannelType.TEXT) ? ((TextChannel) channel).getSlowmode() : 0,
+                    getPermissionEntry(channel.getPermissionOverrides())
+            );
+
+            entry.getChannels().add(backupChannel);
+        }
 
         backups.add(entry);
         onFinish.accept(entry);
@@ -69,44 +90,58 @@ public class BackupObject implements IBackupObject {
     }
 
     private List<ChannelPermissionEntry> getPermissionEntry(List<PermissionOverride> permissionOverrides) {
-        return permissionOverrides.stream().map(permissionOverride -> {
-            Category channelCategory = guild.getCategories().
-                    stream().
-                    filter(category ->
-                            category.getChannels().
-                                    stream().
-                                    anyMatch(channel ->
-                                            channel.getIdLong() == permissionOverride.getChannel().getIdLong())).
-                    findFirst().
-                    orElse(null);
+        Guild guild = Backup.INSTANCE.getDiscordBot().getGuild();
 
-            return new ChannelPermissionEntry(
-                    permissionOverride.getChannel().getName(),
-                    permissionOverride.getChannel().getIdLong(),
-                    channelCategory == null ? null : channelCategory.getName(),
-                    permissionOverride.getIdLong(),
-                    permissionOverride.getAllowed(),
-                    permissionOverride.getDenied()
-            );
-        }).collect(Collectors.toList());
+        return permissionOverrides.stream().map(permissionOverride ->
+                new ChannelPermissionEntry(
+                        permissionOverride.getChannel().getName(),
+                        permissionOverride.getChannel().getId(),
+                        permissionOverride.getId(),
+                        permissionOverride.getAllowed(),
+                        permissionOverride.getDenied()
+                )).collect(Collectors.toList());
     }
 
-    private List<PermissionOverride> getPermissionOverride(List<GuildChannel> channel) {
-        return channel.stream().flatMap(voiceChannel -> voiceChannel.getPermissionOverrides().stream()).collect(Collectors.toList());
-    }
 
     @Override
     public void loadBackup(String id, Runnable onFinish) throws BackupNotFoundException {
         if (!existBackup(id)) throw new BackupNotFoundException("There is no backup with id" + id, id);
         BackupEntry entry = getBackup(id);
 
+        Guild guild = Backup.INSTANCE.getDiscordBot().getGuild();
+
         for (GuildChannel channel : guild.getChannels()) {
             channel.delete().queue();
         }
 
-        for (ChannelPermissionEntry permissionEntry : entry.getTextChannel()) {
-            Category category = guild.getCategoriesByName(permissionEntry.getCategoryName(), true).stream().findFirst().orElse(null);
+        for (BackupChannel channel : entry.getChannels().stream().filter(backupChannel -> backupChannel.getChannelType().equals(ChannelType.CATEGORY)).toList()) {
+            guild.createCategory(channel.getName()).queue(categories -> {
+                categories.getManager().setPosition(channel.getPosition()).queue();
+            });
+        }
 
+        for (BackupChannel channel : entry.getChannels().stream().filter(backupChannel -> backupChannel.getChannelType().equals(ChannelType.VOICE)).toList()) {
+            //Category category = guild.getCategories().stream().filter(categories -> channel.getCategory() != null && categories.getName().equalsIgnoreCase(channel.getCategory())).findFirst().orElse(null);
+            guild.createVoiceChannel(channel.getName()).queue(voiceChannel -> {
+                voiceChannel.getManager().setPosition(channel.getPosition()).queue();
+                voiceChannel.getManager().setUserLimit(channel.getUserLimit()).queue();
+
+                if (channel.getCategory() != null)
+                    voiceChannel.getManager().setParent(guild.getCategoriesByName(channel.getCategory(), true).get(0)).queue();
+            });
+        }
+
+        for (BackupChannel channel : entry.getChannels().stream().filter(backupChannel -> backupChannel.getChannelType().equals(ChannelType.TEXT)).toList()) {
+            //Category category = guild.getCategories().stream().filter(categories -> channel.getCategory() != null && categories.getName().equalsIgnoreCase(channel.getCategory())).findFirst().orElse(null);
+
+            guild.createTextChannel(channel.getName()).queue(textChannel -> {
+                textChannel.getManager().setTopic(channel.getDescription()).queue();
+                textChannel.getManager().setPosition(channel.getPosition()).queue();
+                textChannel.getManager().setSlowmode(channel.getSlowMode()).queue();
+
+                if (channel.getCategory() != null)
+                    textChannel.getManager().setParent(guild.getCategoriesByName(channel.getCategory(), true).get(0)).queue();
+            });
         }
 
         onFinish.run();

@@ -91,7 +91,7 @@ public class BackupCommand extends AbstractCommand {
     }
     
     private void saveBackup(GenericInteractionCreateEvent event) {
-        backupObject.saveBackup(entry -> {
+        backupObject.saveBackup(event.getUser().getIdLong(), entry -> {
             event.replyEmbeds(new EmbedBuilder().setDescription("Created backup ``" + entry.getId() + "``").setColor(Color.cyan).setFooter("Timestamp: " + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(entry.getTimestamp())).build()).setEphemeral(true).queue();
         });
     }
@@ -136,9 +136,7 @@ public class BackupCommand extends AbstractCommand {
                 }
                 clickEvent.replyEmbeds(embedBuilder.build()).setEphemeral(true).queue();
             }
-            case "create" -> {
-                saveBackup(clickEvent);
-            }
+            case "create" -> saveBackup(clickEvent);
         }
     }
 }

@@ -14,7 +14,7 @@ public interface IBackupObject {
 
     void update();
 
-    void saveBackup(Consumer<BackupEntry> onFinish);
+    void saveBackup(long creator, Consumer<BackupEntry> onFinish);
 
     void loadBackup(String id, Runnable onFinish) throws BackupNotFoundException;
 
