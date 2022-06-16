@@ -17,73 +17,73 @@
         <NavItem 
             v-if="Modules.statistics"
             text="Statistics"
-            icon="fas fa-"
+            icon="fas fa-chart-column"
             path="/statistics"
         />
         <NavItem 
             v-if="Modules.applications"
             text="Applications"
-            icon="fas fa-"
+            icon="fas fa-book"
             path="/applications"
         />
         <NavItem 
             v-if="Modules.backups"
             text="Backups"
-            icon="fas fa-"
+            icon="fas fa-hard-drive"
             path="/backups"
         />
         <NavItem 
             v-if="Modules.chatfilter"
             text="Chat Filter"
-            icon="fas fa-"
+            icon="fas fa-comment"
             path="/chat-filter"
         />
         <NavItem 
             v-if="Modules.customcommands"
             text="Custom Commands"
-            icon="fas fa-"
+            icon="fas fa-terminal"
             path="/custom-commands"
         />
         <NavItem 
             v-if="Modules.giveaways"
             text="Giveaways"
-            icon="fas fa-"
+            icon="fas fa-handshake"
             path="/giveaways"
         />
         <NavItem 
             v-if="Modules.maintenance"
             text="Maintenance"
-            icon="fas fa-"
+            icon="fas fa-user-slash"
             path="/maintenance"
         />
         <NavItem 
             v-if="Modules.messages"
             text="Messages"
-            icon="fas fa-"
+            icon="fas fa-message"
             path="/messages"
         />
         <NavItem 
             v-if="Modules.namefilter"
             text="Name Filter"
-            icon="fas fa-"
+            icon="fas fa-filter"
             path="/name-filter"
         />
         <NavItem 
             v-if="Modules.permissions"
             text="Permissions"
-            icon="fas fa-"
+            icon="fas fa-user-check"
             path="/permissions"
         />
         <NavItem 
             v-if="Modules.tickets"
             text="Tickets"
-            icon="fas fa-"
+            icon="fas fa-ticket"
             path="/tickets"
         />
         <NavItem 
             v-if="Modules.welcomes"
             text="Welcomes"
-            icon="fas fa-"
+            icon="fas fa-door-open"
             path="/welcomes"
         />
     </ul>
@@ -111,17 +111,17 @@ export default {
                     dashboard: true,
                     update: true,
                     statistics: true,
-                    applications: false,
-                    backups: false,
-                    chatfilter: false,
-                    customcommands: false,
-                    giveaways: false,
-                    maintenance: false,
-                    messages: false,
-                    namefilter: false,
-                    permissions: false,
-                    tickets: false,
-                    welcomes: false,
+                    applications: true,
+                    backups: true,
+                    chatfilter: true,
+                    customcommands: true,
+                    giveaways: true,
+                    maintenance: true,
+                    messages: true,
+                    namefilter: true,
+                    permissions: true,
+                    tickets: true,
+                    welcomes: true,
                 }
         }
     }
