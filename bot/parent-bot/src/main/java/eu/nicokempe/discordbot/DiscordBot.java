@@ -1,8 +1,6 @@
 package eu.nicokempe.discordbot;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import eu.nicokempe.discordbot.command.handler.ICommandManager;
 import eu.nicokempe.discordbot.command.manager.CommandManager;
 import eu.nicokempe.discordbot.config.JsonConfig;
@@ -13,8 +11,8 @@ import eu.nicokempe.discordbot.logger.Logger;
 import eu.nicokempe.discordbot.module.IModuleLoader;
 import eu.nicokempe.discordbot.module.ModuleLoader;
 import eu.nicokempe.discordbot.request.RequestBuilder;
+import eu.nicokempe.discordbot.update.UpdateTask;
 import eu.nicokempe.discordbot.user.IDiscordUser;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -34,6 +32,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Timer;
 import java.util.stream.Collectors;
 
 @Getter
@@ -47,6 +46,8 @@ public class DiscordBot implements IDiscordBot {
 
     private IModuleLoader moduleLoader;
     private ICommandManager commandManager;
+    private Timer timer = new Timer();
+    private UpdateTask updateTask;
 
     private JDA jda;
     private Guild guild;
@@ -62,23 +63,29 @@ public class DiscordBot implements IDiscordBot {
     public void enable() {
         new Logger();
 
-        config= new JsonConfig(new File("../config.json"));
+        config = new JsonConfig(new File("../config.json"));
         String name = config.get("name", String.class);
         String password = config.get("password", String.class);
+        String host = config.get("host", String.class);
 
         if (name == null) name = config.set("name", "Admin");
         if (password == null) password = config.set("password", "123456");
+        if (host == null) host = config.set("host", "http://127.0.0.1:8081/api/");
         config.saveConfig();
 
         System.out.println("Logging in...");
+        RequestBuilder.url = host;
         RequestBuilder.builder().route("login").body(new FormBody.Builder().add("name", name).add("password", password)).response(response -> {
             if (response.isSuccessful()) {
                 try {
-                    authKey = new Gson().fromJson(response.body().string(), DiscordBot.AuthKey.class);
+                    authKey = new Gson().fromJson(response.body().string(), AuthKey.class);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                updateTask = new UpdateTask();
                 init();
+            } else {
+                System.out.println("Login failed");
             }
         }).build().post();
     }
@@ -146,6 +153,8 @@ public class DiscordBot implements IDiscordBot {
     private void loadCommands() {
         System.out.println("Loading commands...");
         commandManager.loadCommands();
+
+        timer.schedule(updateTask, 0, 5 * 1000);
 
         int took = Math.toIntExact((System.currentTimeMillis() - start) / 1000);
         int rest = Math.toIntExact((System.currentTimeMillis() - start) % 1000);

@@ -2,7 +2,9 @@ package eu.nicokempe.discordbot;
 
 import com.google.gson.*;
 import eu.nicokempe.discordbot.command.handler.ICommandManager;
+import eu.nicokempe.discordbot.config.JsonConfig;
 import eu.nicokempe.discordbot.module.IModuleLoader;
+import eu.nicokempe.discordbot.update.UpdateTask;
 import eu.nicokempe.discordbot.user.IDiscordUser;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,6 +40,12 @@ public interface IDiscordBot {
 
     ICommandManager getCommandManager();
 
+    AuthKey getAuthKey();
+
+    JsonConfig getConfig();
+
+    UpdateTask getUpdateTask();
+
     static String generateString(int length) {
         StringBuilder result = new StringBuilder();
         while (result.length() < length)
@@ -53,8 +61,6 @@ public interface IDiscordBot {
     private static int getInt(int max) {
         return (int) Math.ceil(Math.random() * max);
     }
-
-    AuthKey getAuthKey();
 
     @AllArgsConstructor
     @Getter

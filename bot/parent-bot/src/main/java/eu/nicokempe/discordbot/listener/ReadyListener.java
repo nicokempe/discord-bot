@@ -38,7 +38,7 @@ public class ReadyListener extends ListenerAdapter {
         }).onSuccess(unused -> {
             System.out.println(MessageFormat.format("{0} user(s) was successfully loaded!", DiscordBot.INSTANCE.getUsers().size()));
 
-            CurrentClass<UserEntry> currentUser = new CurrentClass<>(
+            CurrentUser currentUser = new CurrentUser(
                     DiscordBot.INSTANCE.getUsers().stream().map(user ->
                             new UserEntry(
                                     user.getIdString(),
@@ -49,7 +49,8 @@ public class ReadyListener extends ListenerAdapter {
                                     user.isBot()
                             )).collect(Collectors.toList())
             );
-            CurrentClass<ChannelEntry> currentChannel = new CurrentClass<>(
+
+            CurrentChannel currentChannel = new CurrentChannel(
                     guild.getChannels().stream().map(guildChannel ->
                             new ChannelEntry(
                                     guildChannel.getId(),
@@ -69,9 +70,15 @@ public class ReadyListener extends ListenerAdapter {
 
     @RequiredArgsConstructor
     @Getter
-    public class CurrentClass<T> {
-        private final List<T> user;
+    public class CurrentUser {
+        private final List<UserEntry> user;
         private final long timestamp = System.currentTimeMillis();
     }
 
+    @RequiredArgsConstructor
+    @Getter
+    public class CurrentChannel {
+        private final List<ChannelEntry> channel;
+        private final long timestamp = System.currentTimeMillis();
+    }
 }

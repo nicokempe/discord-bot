@@ -9,16 +9,13 @@ public class Messenger extends ModuleInterface {
 
     public static Messenger INSTANCE;
 
-    private MessageTask messageTask;
-
     public Messenger() {
         INSTANCE = this;
     }
 
     @Override
     public void enable() {
-        messageTask = new MessageTask();
-        messageTask.start();
+        getDiscordBot().getUpdateTask().addTask(new MessageTask());
     }
 
     @Override

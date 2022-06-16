@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import eu.nicokempe.discordbot.IDiscordBot;
 import lombok.Builder;
+import lombok.Setter;
 import lombok.SneakyThrows;
 import okhttp3.*;
 
@@ -17,8 +18,8 @@ import java.util.function.Consumer;
 @Builder
 public class RequestBuilder {
 
-    @Builder.Default
-    private final String url = "http://127.0.0.1:8081/api/";
+    public static String url = "http://127.0.0.1:8081/api/";
+
     private final String route;
     private final FormBody.Builder body;
     private final Consumer<Response> response;
@@ -60,13 +61,14 @@ public class RequestBuilder {
             if (this.response != null) this.response.accept(response);
         } catch (SocketTimeoutException e) {
             System.out.println("Timeout");
+            e.printStackTrace();
         }
     }
 
     public JsonElement get() {
         URL url;
         try {
-            url = new URL(this.url + route);
+            url = new URL(RequestBuilder.url + route);
         } catch (MalformedURLException e) {
             e.printStackTrace();
             return null;
