@@ -1,0 +1,71 @@
+/*
+
+|‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|
+| Color Documentation |
+|_____________________|
+
+*/
+
+color-documentation {
+    main-background: #101010;
+    secondary-background: #191919;
+
+    primary-color: #55FFFF;
+    secondary-color: #00AAAA;
+
+    success-light: #55FF55;
+    success-dark: #00AA00;
+
+    warning: #FFFF55;
+    error: #FF5555;
+
+    text-light: #FFFFFF;
+    text-dark: #000000;
+}
+
+/*
+
+|‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|
+| Global Styles |
+|_______________|
+
+*/
+
+#app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #fff;
+  }
+  
+  body {
+    background-color: #191919;
+    color: #FFFFFF;
+}
+
+
+  nav {
+    padding: 30px;
+  }
+  
+a {
+    font-weight: bold;
+    color: #00AAAA;
+    text-decoration: none;
+  }
+  
+a.router-link-exact-active {
+    color: #55FFFF;
+    text-decoration: none;
+  }
+
+a.active {
+    color: #55FFFF;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #55FFFF;
+    text-decoration: none;
+}
