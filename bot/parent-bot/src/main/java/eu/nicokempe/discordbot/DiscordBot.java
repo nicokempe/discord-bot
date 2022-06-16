@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import eu.nicokempe.discordbot.command.handler.ICommandManager;
 import eu.nicokempe.discordbot.command.manager.CommandManager;
+import eu.nicokempe.discordbot.config.JsonConfig;
 import eu.nicokempe.discordbot.listener.JoinListener;
 import eu.nicokempe.discordbot.listener.ReadyListener;
 import eu.nicokempe.discordbot.listener.SlashListener;
@@ -27,11 +28,9 @@ import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import okhttp3.*;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.file.NoSuchFileException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -51,6 +50,9 @@ public class DiscordBot implements IDiscordBot {
 
     private JDA jda;
     private Guild guild;
+    private JsonConfig config;
+
+    private long start;
 
     public DiscordBot() {
         INSTANCE = this;
@@ -59,7 +61,17 @@ public class DiscordBot implements IDiscordBot {
     @Override
     public void enable() {
         new Logger();
-        RequestBuilder.builder().route("login").body(new FormBody.Builder().add("name", "Admin").add("password", "123456")).response(response -> {
+
+        config= new JsonConfig(new File("../config.json"));
+        String name = config.get("name", String.class);
+        String password = config.get("password", String.class);
+
+        if (name == null) name = config.set("name", "Admin");
+        if (password == null) password = config.set("password", "123456");
+        config.saveConfig();
+
+        System.out.println("Logging in...");
+        RequestBuilder.builder().route("login").body(new FormBody.Builder().add("name", name).add("password", password)).response(response -> {
             if (response.isSuccessful()) {
                 try {
                     authKey = new Gson().fromJson(response.body().string(), DiscordBot.AuthKey.class);
@@ -73,6 +85,7 @@ public class DiscordBot implements IDiscordBot {
 
     @SneakyThrows
     private void init() {
+        start = System.currentTimeMillis();
         System.out.println("Loading bot...");
 
         commandManager = new CommandManager();
@@ -108,7 +121,9 @@ public class DiscordBot implements IDiscordBot {
 
     @Override
     public void disable() {
+        System.out.println("Disabling bot...");
         moduleLoader.disable();
+        System.out.println("Goodbye!");
     }
 
     @SneakyThrows
@@ -131,7 +146,10 @@ public class DiscordBot implements IDiscordBot {
     private void loadCommands() {
         System.out.println("Loading commands...");
         commandManager.loadCommands();
-        System.out.println("Bot enabled.");
+
+        int took = Math.toIntExact((System.currentTimeMillis() - start) / 1000);
+        int rest = Math.toIntExact((System.currentTimeMillis() - start) % 1000);
+        System.out.println(MessageFormat.format("Loading complete! (Took {1},{2}s)", DiscordBot.INSTANCE.getUsers().size(), took, rest));
     }
 
     @Override

@@ -1,8 +1,11 @@
 package eu.nicokempe.discordbot.module;
 
+import com.google.gson.Gson;
 import com.sun.tools.jconsole.JConsoleContext;
 import eu.nicokempe.discordbot.DiscordBot;
+import eu.nicokempe.discordbot.request.RequestBuilder;
 import lombok.Getter;
+import okhttp3.FormBody;
 
 import java.io.File;
 import java.io.IOException;
@@ -59,13 +62,12 @@ public class ModuleLoader implements IModuleLoader {
                 moduleInterface.setDiscordBot(DiscordBot.INSTANCE);
 
                 System.out.println(MessageFormat.format("Loading {0} v{1}", properties.getProperty("name"), properties.getProperty("version")));
-
                 moduleInterface.enable();
                 this.modules.add(moduleInterface);
             }
         }
 
-        System.out.println("Loaded " + this.modules.size() + " modules");
+        System.out.println(MessageFormat.format("{0} module(s) was successfully loaded!", this.modules.size()));
         onFinish.accept(null);
     }
 

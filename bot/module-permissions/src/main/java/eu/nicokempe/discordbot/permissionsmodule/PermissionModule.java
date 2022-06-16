@@ -68,7 +68,7 @@ public class PermissionModule extends ModuleInterface {
         try {
             getDiscordBot().getGuild().addRoleToMember(memberId, role).queue();
         } catch (HierarchyException e) {
-            System.out.println(MessageFormat.format("Not allowed to change {0} role. Please change bot role above highest role!", role.getName()));
+            System.out.println(MessageFormat.format("{0}'s role could not be changed. Please adjust the rights of the bot!", role.getName()));
         }
     }
 

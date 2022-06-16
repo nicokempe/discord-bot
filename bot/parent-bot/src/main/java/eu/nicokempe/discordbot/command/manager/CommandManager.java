@@ -6,6 +6,7 @@ import eu.nicokempe.discordbot.command.handler.ICommandManager;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,7 @@ public class CommandManager implements ICommandManager {
             commands.addCommands(toData(abstractCommand));
         }
         commands.queue();
+        System.out.println(MessageFormat.format("{0} command(s) were successfully loaded!", queue.size()));
     }
 
     private CommandData toData(AbstractCommand command) {

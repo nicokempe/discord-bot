@@ -3,6 +3,7 @@ package eu.nicokempe.discordbot.user;
 import eu.nicokempe.discordbot.DiscordBot;
 import lombok.Getter;
 import lombok.Setter;
+import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 
@@ -23,7 +24,7 @@ public class DiscordUser implements IDiscordUser {
     public void load(long id) {
         this.id = id;
         this.member = DiscordBot.INSTANCE.getGuild().getMemberById(id);
-        if (member == null) throw new IllegalArgumentException("Member can not be null");
+        if (member == null) throw new IllegalArgumentException("Member cannot be null");
         this.user = member.getUser();
     }
 
@@ -45,5 +46,10 @@ public class DiscordUser implements IDiscordUser {
     @Override
     public String getNickname() {
         return member.getNickname() == null ? getName() : member.getNickname();
+    }
+
+    @Override
+    public OnlineStatus getStatus() {
+        return member.getOnlineStatus();
     }
 }

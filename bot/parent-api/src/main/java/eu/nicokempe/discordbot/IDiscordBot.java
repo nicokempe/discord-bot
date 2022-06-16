@@ -1,7 +1,6 @@
 package eu.nicokempe.discordbot;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import eu.nicokempe.discordbot.command.handler.ICommandManager;
 import eu.nicokempe.discordbot.module.IModuleLoader;
 import eu.nicokempe.discordbot.user.IDiscordUser;
@@ -14,6 +13,8 @@ import okhttp3.RequestBody;
 import java.util.List;
 
 public interface IDiscordBot {
+
+    Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     void enable();
 

@@ -23,12 +23,12 @@ public class SlashListener extends ListenerAdapter {
         AbstractCommand command = DiscordBot.INSTANCE.getCommandManager().getCommandByName(event.getName());
         if (command == null) return;
         if (command.getChannel() != -1 && command.getChannel() != event.getChannel().getIdLong()) {
-            event.replyEmbeds(new EmbedBuilder().setColor(Color.red).setDescription("Dieser Command darf nur in " + DiscordBot.INSTANCE.getGuild().getTextChannelById(command.getChannel()).getAsMention() + " ausgeführt werden!").build()).setEphemeral(true).queue();
+            event.replyEmbeds(new EmbedBuilder().setColor(Color.red).setDescription("This command may only be executed in channel " + DiscordBot.INSTANCE.getGuild().getTextChannelById(command.getChannel()).getAsMention()).build()).setEphemeral(true).queue();
             return;
         }
         IDiscordUser user = DiscordBot.INSTANCE.getUser(event.getUser().getIdLong());
         if (noPermission(user, command)) {
-            event.replyEmbeds(new EmbedBuilder().setColor(Color.red).setDescription("Ich konnte diesen Befehl nicht finden!").setFooter(user.getNickname(), user.getUser().getAvatarUrl()).build()).setEphemeral(true).queue();
+            event.replyEmbeds(new EmbedBuilder().setColor(Color.red).setDescription("This command could not be found!").setFooter(user.getNickname(), user.getUser().getAvatarUrl()).build()).setEphemeral(true).queue();
             return;
         }
         command.onExecute(user, event);

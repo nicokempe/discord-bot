@@ -18,7 +18,7 @@ import java.util.function.Consumer;
 public class RequestBuilder {
 
     @Builder.Default
-    private final String url = "http://45.93.249.108:8085/api/";
+    private final String url = "http://127.0.0.1:8081/api/";
     private final String route;
     private final FormBody.Builder body;
     private final Consumer<Response> response;

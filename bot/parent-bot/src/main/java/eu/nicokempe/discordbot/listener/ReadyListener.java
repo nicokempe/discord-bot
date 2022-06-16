@@ -28,20 +28,17 @@ public class ReadyListener extends ListenerAdapter {
         Guild guild = DiscordBot.INSTANCE.getJda().getGuildById(DiscordBot.INSTANCE.getGuildId());
         DiscordBot.INSTANCE.setGuild(guild);
 
-        long timestamp = System.currentTimeMillis();
         if (guild == null) return;
 
-        System.out.println("Loading Users...");
+        System.out.println("Loading users...");
         guild.loadMembers(member -> {
             IDiscordUser discordUser = new DiscordUser();
             discordUser.load(member.getIdLong());
             DiscordBot.INSTANCE.getUsers().add(discordUser);
         }).onSuccess(unused -> {
-            int took = Math.toIntExact((System.currentTimeMillis() - timestamp) / 1000);
-            int rest = Math.toIntExact((System.currentTimeMillis() - timestamp) % 1000);
-            System.out.println(MessageFormat.format("Loading {0} Users complete! (Took {1},{2}s)", DiscordBot.INSTANCE.getUsers().size(), took, rest));
+            System.out.println(MessageFormat.format("{0} user(s) was successfully loaded!", DiscordBot.INSTANCE.getUsers().size()));
 
-            CurrentUser currentUser = new CurrentUser(
+            CurrentClass<UserEntry> currentUser = new CurrentClass<>(
                     DiscordBot.INSTANCE.getUsers().stream().map(user ->
                             new UserEntry(
                                     user.getIdString(),
@@ -52,7 +49,7 @@ public class ReadyListener extends ListenerAdapter {
                                     user.isBot()
                             )).collect(Collectors.toList())
             );
-            CurrentChannel currentChannel = new CurrentChannel(
+            CurrentClass<ChannelEntry> currentChannel = new CurrentClass<>(
                     guild.getChannels().stream().map(guildChannel ->
                             new ChannelEntry(
                                     guildChannel.getId(),
@@ -62,8 +59,6 @@ public class ReadyListener extends ListenerAdapter {
                             )).collect(Collectors.toList())
             );
 
-            /*DiscordBot.INSTANCE.sendPost("currentUser", new FormBody.Builder().add("member", new Gson().toJson(currentUser)).build());
-            DiscordBot.INSTANCE.sendPost("currentChannel", new FormBody.Builder().add("channel", new Gson().toJson(currentChannel)).build());*/
             RequestBuilder.builder().route("currentUser").body(new FormBody.Builder().add("member", new Gson().toJson(currentUser))).authKey(DiscordBot.INSTANCE.getAuthKey()).build().post();
             RequestBuilder.builder().route("currentChannel").body(new FormBody.Builder().add("channel", new Gson().toJson(currentChannel))).authKey(DiscordBot.INSTANCE.getAuthKey()).build().post();
 
@@ -74,15 +69,9 @@ public class ReadyListener extends ListenerAdapter {
 
     @RequiredArgsConstructor
     @Getter
-    public class CurrentUser {
-        private final List<UserEntry> user;
+    public class CurrentClass<T> {
+        private final List<T> user;
         private final long timestamp = System.currentTimeMillis();
     }
 
-    @RequiredArgsConstructor
-    @Getter
-    public class CurrentChannel {
-        private final List<ChannelEntry> channel;
-        private final long timestamp = System.currentTimeMillis();
-    }
 }

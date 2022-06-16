@@ -7,7 +7,7 @@
     <groupId>eu.nicokempe</groupId>
     <artifactId>DiscordBot</artifactId>
     <packaging>pom</packaging>
-    <version>2022.6.1-DEV</version>
+    <version>2022.6.1-dev</version>
     <modules>
         <module>parent-api</module>
         <module>parent-bot</module>
@@ -16,6 +16,8 @@
         <module>module-permissions-api</module>
         <module>module-messenger</module>
         <module>module-messenger-api</module>
+        <module>module-backup</module>
+        <module>module-backup-api</module>
     </modules>
 
     <properties>
