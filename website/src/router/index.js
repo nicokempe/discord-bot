@@ -7,6 +7,27 @@ const routes = [
     name: 'home',
     component: HomeView
   },
+  // installation pages
+  {
+    path: '/install/authentication',
+    name: 'BotAuthentication',
+    component: function () { return import('../views/install/BotAuthentication.vue') }
+  },
+  {
+    path: '/install/language-selection',
+    name: 'LanguageSelection',
+    component: function () { return import('../views/install/LanguageSelection.vue') }
+  },
+  {
+    path: '/install/module-selection',
+    name: 'ModuleSelection',
+    component: function () { return import('../views/install/ModuleSelection.vue') }
+  },
+  {
+    path: '/install/completed',
+    name: 'InstallationCompleted',
+    component: function () { return import('../views/install/InstallationCompleted.vue') }
+  },
   // error pages
   {
     path: '/400',
