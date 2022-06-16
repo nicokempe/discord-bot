@@ -1,6 +1,6 @@
 <template>
   <Header></Header>
-  <NavBar></NavBar>
+  <Sidebar></Sidebar>
   <div class="permissions">
     <h1>This is the Permissions page</h1>
   </div>
@@ -8,13 +8,13 @@
 
 <script>
 import Header from '@/components/static/Header.vue'
-import NavBar from '@/components/static/NavBar.vue'
+import Sidebar from '@/components/navbar/Sidebar.vue'
 
 export default {
   name: 'Permissions',
   components: {
     Header,
-    NavBar
+    Sidebar
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <Header></Header>
-  <NavBar></NavBar>
+  <Sidebar></Sidebar>
   <div class="chat-filter">
     <h1>This is the Chat Filter page</h1>
   </div>
@@ -8,13 +8,13 @@
 
 <script>
 import Header from '@/components/static/Header.vue'
-import NavBar from '@/components/static/NavBar.vue'
+import Sidebar from '@/components/navbar/Sidebar.vue'
 
 export default {
   name: 'ChatFilter',
   components: {
     Header,
-    NavBar
+    Sidebar
   }
 }
 </script>

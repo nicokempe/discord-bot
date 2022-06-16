@@ -1,6 +1,6 @@
 <template>
   <Header></Header>
-  <NavBar></NavBar>
+  <Sidebar></Sidebar>
   <div class="applications">
     <h1>This is the Applications page</h1>
   </div>
@@ -8,13 +8,13 @@
 
 <script>
 import Header from '@/components/static/Header.vue'
-import NavBar from '@/components/static/NavBar.vue'
+import Sidebar from '@/components/navbar/Sidebar.vue'
 
 export default {
   name: 'Applications',
   components: {
     Header,
-    NavBar
+    Sidebar
   }
 }
 </script>
