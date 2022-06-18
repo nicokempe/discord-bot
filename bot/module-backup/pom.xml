@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>parent-bot</artifactId>
+    <artifactId>module-backup</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -19,9 +19,26 @@
     <dependencies>
         <dependency>
             <groupId>eu.nicokempe</groupId>
-            <artifactId>parent-api</artifactId>
+            <artifactId>module-backup-api</artifactId>
             <version>2022.6.1-dev</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

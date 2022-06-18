@@ -9,11 +9,19 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>parent-api</artifactId>
+    <artifactId>module-backup-api</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>eu.nicokempe</groupId>
+            <artifactId>parent-api</artifactId>
+            <version>2022.6.1-dev</version>
+        </dependency>
+    </dependencies>
 
 </project>
