@@ -1,5 +1,9 @@
 <template>
-  <div class="notfound">
-    <h1>This is the Not Found page</h1>
+  <div class="not-found">
+    <h1 class="title">404</h1>
+    <h2 class="subtitle">Not Found</h2>
+    <router-link class="home-button" to="/">
+      <button type="button">Homepage</button>
+    </router-link>
   </div>
 </template>
