@@ -77,6 +77,11 @@ const routes = [
     component: function () { return import('../views/auth/2FA.vue') }
   },
   {
+    path: '/2fa-setup',
+    name: '2FASetup',
+    component: function () { return import('../views/auth/2FASetup.vue') }
+  },
+  {
     path: '/forget-password',
     name: 'ForgetPassword',
     component: function () { return import('../views/auth/ForgetPassword.vue') }
@@ -85,11 +90,6 @@ const routes = [
     path: '/sign-in',
     name: 'SignIn',
     component: function () { return import('../views/auth/SignIn.vue') }
-  },
-  {
-    path: '/sign-up',
-    name: 'SignUp',
-    component: function () { return import('../views/auth/SignUp.vue') }
   },
   // default panel views
   {
