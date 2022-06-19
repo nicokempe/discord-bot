@@ -95,14 +95,12 @@
 
 import NavItem from './NavItem.vue'
 import NavSeperator from './NavSeperator.vue'
-import NavDropdown from './NavDropdown.vue'
 
 export default {
     name: 'Sidebar',
     components: {
         NavItem,
-        NavSeperator,
-        NavDropdown
+        NavSeperator
     },
     data() {
         return {
