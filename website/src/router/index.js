@@ -49,6 +49,11 @@ const routes = [
     name: 'NotFound',
     component: function () { return import('../views/errors/NotFound.vue') }
   },
+  { 
+    path: '/:pathMatch(.*)*',
+    name: 'not-found',
+    redirect: '/404'
+  },
   // legal pages
   {
     path: '/credits',
