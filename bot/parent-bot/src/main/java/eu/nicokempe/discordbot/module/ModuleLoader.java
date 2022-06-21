@@ -79,4 +79,9 @@ public class ModuleLoader implements IModuleLoader {
         }
     }
 
+    @Override
+    public boolean isModuleLoaded(String name) {
+        return modules.stream().anyMatch(moduleInterface -> moduleInterface.getProperties().getProperty("name").equalsIgnoreCase(name));
+    }
+
 }

@@ -14,4 +14,6 @@ public interface IModuleLoader {
 
     List<ModuleInterface> getModules();
 
+    boolean isModuleLoaded(String name);
+
 }
