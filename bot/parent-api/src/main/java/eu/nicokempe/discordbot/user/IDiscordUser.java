@@ -1,5 +1,6 @@
 package eu.nicokempe.discordbot.user;
 
+import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 
@@ -22,5 +23,11 @@ public interface IDiscordUser {
     String getName();
 
     String getNickname();
+
+    OnlineStatus getStatus();
+
+    <T> T getPlayer(Class<T> tClass);
+
+    <T> void setPlayer(Class<T> tClass, T player);
 
 }

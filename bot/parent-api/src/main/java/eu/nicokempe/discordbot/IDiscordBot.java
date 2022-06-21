@@ -2,6 +2,7 @@ package eu.nicokempe.discordbot;
 
 import com.google.gson.*;
 import eu.nicokempe.discordbot.command.handler.ICommandManager;
+import eu.nicokempe.discordbot.config.IConfigObject;
 import eu.nicokempe.discordbot.config.JsonConfig;
 import eu.nicokempe.discordbot.module.IModuleLoader;
 import eu.nicokempe.discordbot.update.UpdateTask;
@@ -38,6 +39,10 @@ public interface IDiscordBot {
 
     IDiscordUser getUser(long id);
 
+    <T> T getUser(long id, Class<T> tClass);
+
+    <T> List<T> getUsers(Class<T> tClass);
+
     ICommandManager getCommandManager();
 
     AuthKey getAuthKey();
@@ -45,6 +50,8 @@ public interface IDiscordBot {
     JsonConfig getConfig();
 
     UpdateTask getUpdateTask();
+
+    IConfigObject getNewConfigObject();
 
     static String generateString(int length) {
         StringBuilder result = new StringBuilder();

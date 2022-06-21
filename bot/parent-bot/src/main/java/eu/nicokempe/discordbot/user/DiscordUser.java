@@ -7,6 +7,9 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Getter
 @Setter
 public class DiscordUser implements IDiscordUser {
@@ -14,6 +17,8 @@ public class DiscordUser implements IDiscordUser {
     private User user;
     private Member member;
     private long id;
+
+    private final Map<String, Object> player = new HashMap<>();
 
     @Override
     public boolean isBot() {
@@ -51,5 +56,15 @@ public class DiscordUser implements IDiscordUser {
     @Override
     public OnlineStatus getStatus() {
         return member.getOnlineStatus();
+    }
+
+    @Override
+    public <T> T getPlayer(Class<T> tClass) {
+        return (T) this.player.getOrDefault(tClass.getName(), null);
+    }
+
+    @Override
+    public <T> void setPlayer(Class<T> tClass, T player) {
+        this.player.put(tClass.getName(), player);
     }
 }

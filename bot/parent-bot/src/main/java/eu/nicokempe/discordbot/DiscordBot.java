@@ -3,6 +3,9 @@ package eu.nicokempe.discordbot;
 import com.google.gson.Gson;
 import eu.nicokempe.discordbot.command.handler.ICommandManager;
 import eu.nicokempe.discordbot.command.manager.CommandManager;
+import eu.nicokempe.discordbot.config.ConfigObject;
+import eu.nicokempe.discordbot.config.ConfigWrapper;
+import eu.nicokempe.discordbot.config.IConfigObject;
 import eu.nicokempe.discordbot.config.JsonConfig;
 import eu.nicokempe.discordbot.listener.JoinListener;
 import eu.nicokempe.discordbot.listener.ReadyListener;
@@ -46,6 +49,7 @@ public class DiscordBot implements IDiscordBot {
 
     private IModuleLoader moduleLoader;
     private ICommandManager commandManager;
+    private IConfigObject defaultConfig;
     private Timer timer = new Timer();
     private UpdateTask updateTask;
 
@@ -156,6 +160,9 @@ public class DiscordBot implements IDiscordBot {
 
         timer.schedule(updateTask, 0, 5 * 1000);
 
+        defaultConfig = new ConfigObject();
+        defaultConfig.load("default");
+
         int took = Math.toIntExact((System.currentTimeMillis() - start) / 1000);
         int rest = Math.toIntExact((System.currentTimeMillis() - start) % 1000);
         System.out.println(MessageFormat.format("Loading complete! (Took {1},{2}s)", DiscordBot.INSTANCE.getUsers().size(), took, rest));
@@ -174,6 +181,22 @@ public class DiscordBot implements IDiscordBot {
     @Override
     public IDiscordUser getUser(long id) {
         return discordUsers.stream().filter(iDiscordUser -> iDiscordUser.getId() == id).findFirst().orElse(null);
+    }
+
+    @Override
+    public <T> T getUser(long id, Class<T> tClass) {
+        if (getUser(id) == null) return null;
+        return getUser(id).getPlayer(tClass);
+    }
+
+    @Override
+    public <T> List<T> getUsers(Class<T> tClass) {
+        return getUsers().stream().filter(iDiscordUser -> iDiscordUser.getPlayer(tClass) != null).map(iDiscordUser -> iDiscordUser.getPlayer(tClass)).collect(Collectors.toList());
+    }
+
+    @Override
+    public IConfigObject getNewConfigObject() {
+        return new ConfigObject();
     }
 
     private String getResourceFileAsString() throws IOException {
