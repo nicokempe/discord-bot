@@ -8,10 +8,10 @@ import net.dv8tion.jda.api.entities.ChannelType;
 @Getter
 public class ChannelEntry {
 
-    private final String id;
-    private final String name;
-    private final int position;
-    private final ChannelType channelType;
+    private String id;
+    private String name;
+    private int position;
+    private ChannelType channelType;
 
     public long getIdLong() {
         return Long.parseLong(id);

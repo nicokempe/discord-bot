@@ -40,6 +40,7 @@ public interface IBackupObject {
     class BackupLoadObject {
         private List<BackupEntry> entries;
         private long backupInterval = -1;
+        private boolean createNew;
     }
 
 }

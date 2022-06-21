@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class BackupCommand extends AbstractCommand {
 
     private final IBackupObject backupObject;
-    
+
     public BackupCommand(String name, String description) {
         super(name, description);
         addOption(new OptionData(OptionType.STRING, "type", "Type", true).
@@ -33,7 +33,7 @@ public class BackupCommand extends AbstractCommand {
                 new OptionData(OptionType.STRING, "id", "id of backup", false),
                 new OptionData(OptionType.INTEGER, "interval", "interval of auto-backup", false));
         setAliases("bu");
-        
+
         backupObject = Backup.INSTANCE.getBackupObject();
     }
 
@@ -56,7 +56,7 @@ public class BackupCommand extends AbstractCommand {
                     return;
                 }
                 event.replyEmbeds(new EmbedBuilder().setColor(Color.cyan).setDescription("You sure to load this backup?").build()).setEphemeral(true).addActionRow(Button.danger(buttonName("confirm_" + id), "Confirm")).queue();
-             }
+            }
             case "list" -> {
                 EmbedBuilder embedBuilder = new EmbedBuilder().setColor(Color.cyan);
                 embedBuilder.setTitle("List of backups");
@@ -69,7 +69,7 @@ public class BackupCommand extends AbstractCommand {
                     embedBuilder.setDescription("No backups present.");
                 ReplyAction action = event.replyEmbeds(embedBuilder.build()).setEphemeral(true).addActionRow(Button.danger(buttonName("deleteAll"), "Delete all").withDisabled(/*!user.getPermissionObject().hasDiscordRank(DiscordBot.INSTANCE.getGroupLoader().getDiscordId(PermissionGroupLoader.STAR)) || */backups.isEmpty()), Button.success(buttonName("create"), "Create one"));
                 action.queue();
-             }
+            }
             case "delete" -> {
                 if (event.getOption("id") == null) {
 
@@ -89,7 +89,7 @@ public class BackupCommand extends AbstractCommand {
             }
         }
     }
-    
+
     private void saveBackup(GenericInteractionCreateEvent event) {
         backupObject.saveBackup(event.getUser().getIdLong(), entry -> {
             event.replyEmbeds(new EmbedBuilder().setDescription("Created backup ``" + entry.getId() + "``").setColor(Color.cyan).setFooter("Timestamp: " + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(entry.getTimestamp())).build()).setEphemeral(true).queue();

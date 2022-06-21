@@ -15,6 +15,8 @@ public class BackupEntry {
     private final long timestamp = System.currentTimeMillis();
     private final String creator;
     private final List<BackupChannel> channels = new ArrayList<>();
+    private final List<BackupRole> roles = new ArrayList<>();
+    private final String icon;
 
     /*private final String id = IDiscordBot.generateString(8);
     private final long timestamp = System.currentTimeMillis();

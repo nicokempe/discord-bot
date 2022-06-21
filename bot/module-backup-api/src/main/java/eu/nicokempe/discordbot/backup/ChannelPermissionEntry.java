@@ -10,10 +10,15 @@ import java.util.EnumSet;
 @AllArgsConstructor
 public class ChannelPermissionEntry {
 
-    private final String name;
+    private final int typ;
+    private final String id;
+    private final EnumSet<Permission> allowed;
+    private final EnumSet<Permission> denied;
+
+    /*private final String name;
     private final String channelId;
     private final String overrideId;
     private final EnumSet<Permission> allowed;
-    private final EnumSet<Permission> denied;
+    private final EnumSet<Permission> denied;*/
 
 }
