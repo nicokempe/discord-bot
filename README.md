@@ -16,7 +16,7 @@ In this repository we keep the current state of development of the Discord Bot m
 - Planned Features
 - Known critical bugs
 - Credits & Dependencies
-- Installation
+- Setup
 - Discord
 - License
 
@@ -45,12 +45,8 @@ The full credits and dependencies can be found on the **[📋 Credits and Depend
 
 ---
 
-### ⬇️ Installation
-Install [GitHub Desktop](https://desktop.github.com/), click on the green "Code" button in this project on top of the file viewer. Click on the [Open with GitHub Desktop](x-github-client://openRepo/https://github.com/NicoKempeEU/discord-bot) button. Then set a file path where you would like to have saved the project. Then the GitHub desktop program suggests the options "Open in Visual Studio Code" and "Show in Explorer". Select the options that suit you and open the project with your favorite code editor. Then you simply open the terminal and carry out the commands of your choice. You have to build the following programs:
-- Discord Bot
-- Website FrontEnd
-- Website BackEnd
-
+### ⬇️ Setup
+The entire setup process can be found on the **[⬇️ Setup](https://github.com/NicoKempeEU/discord-bot/wiki/%E2%AC%87%EF%B8%8F-Setup)** wiki page.
 
 ### Discord
 [![Discord Server](https://discordapp.com/api/guilds/528350750825512988/widget.png?style=banner2)](https://discord.com/invite/t9frQmmqPe)
