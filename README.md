@@ -22,25 +22,11 @@ In this repository we keep the current state of development of the Discord Bot m
 
 ---
 
-### ⭐ Features
-- Currently still in the planning phase
+### ⭐ Core Features
+#### **Discord Bot** (**[/bot](https://github.com/NicoKempeEU/discord-bot/tree/main/bot)**)
+* Backup System 
 
----
-
-### 🌙 Planned Features
-- Backup System
-- Maintenance System
-- Online Permissions
-- Data for the webpage
-- Giveaway System
-- Online Messages sent by the Bot
-- Welcome messages (Channel)
-- Welcome messages (Privat)
-- Application system
-- Name checks (for bad words and special characters)
-- Chat filter (for bad words, advertising)
-- Ticket System / Report System
-- Custom commands (e.g. !youtube)
+Planned and cancelled features can be found on the **[🌟 Features](https://github.com/NicoKempeEU/discord-bot/wiki/%F0%9F%8C%9F-Features)** wiki page.
 
 ---
 
