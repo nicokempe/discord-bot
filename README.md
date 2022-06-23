@@ -15,7 +15,7 @@ In this repository we keep the current state of development of the Discord Bot m
 - Features
 - Planned Features
 - Known critical bugs
-- Credits and often used dependencies
+- Credits & Dependencies
 - Installation
 - Discord
 - License
