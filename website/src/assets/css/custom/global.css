@@ -1,6 +1,18 @@
 /*
 
 |‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|
+| TailWind Init       |
+|_____________________|
+
+*/
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+
+|‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|
 | Color Documentation |
 |_____________________|
 
