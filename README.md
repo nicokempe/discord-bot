@@ -49,10 +49,13 @@ In this repository we keep the current state of development of the Discord Bot m
 
 ---
 
-### 📋 Credits and often used Dependencies
-- **[Vue.js](https://vuejs.org/)** is used to build the **[FrontEnd](https://github.com/NicoKempeEU/discord-bot/blob/main/website)**.
+### 📋 Credits and Dependencies
+- **[Vue.js](https://vuejs.org/)** and **[Tailwind CSS](https://tailwindcss.com/)** are used to build the **[FrontEnd](https://github.com/NicoKempeEU/discord-bot/blob/main/website)**.
 - **[Express.js](https://expressjs.com/)** is used to build the **[BackEnd](https://github.com/NicoKempeEU/discord-bot/blob/main/server)**.
 - **[Java](https://java.com/)** and the **[Java Discord API](https://github.com/DV8FromTheWorld/JDA)** are used to build the **[Discord Bot](https://github.com/NicoKempeEU/discord-bot/blob/main/bot)**
+
+The full credits and dependencies can be found on the **[📋 Credits and Dependencies](https://github.com/NicoKempeEU/discord-bot/wiki/%F0%9F%93%8B-Credits-and-Dependencies)** wiki page.
+
 
 ---
 
