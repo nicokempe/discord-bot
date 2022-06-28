@@ -15,32 +15,18 @@ In this repository we keep the current state of development of the Discord Bot m
 - Features
 - Planned Features
 - Known critical bugs
-- Credits and often used dependencies
-- Installation
+- Credits & Dependencies
+- Setup
 - Discord
 - License
 
 ---
 
-### ⭐ Features
-- Currently still in the planning phase
+### ⭐ Core Features
+#### **Discord Bot** (**[/bot](https://github.com/NicoKempeEU/discord-bot/tree/main/bot)**)
+* Backup System 
 
----
-
-### 🌙 Planned Features
-- Backup System
-- Maintenance System
-- Online Permissions
-- Data for the webpage
-- Giveaway System
-- Online Messages sent by the Bot
-- Welcome messages (Channel)
-- Welcome messages (Privat)
-- Application system
-- Name checks (for bad words and special characters)
-- Chat filter (for bad words, advertising)
-- Ticket System / Report System
-- Custom commands (e.g. !youtube)
+Planned and cancelled features can be found on the **[🌟 Features](https://github.com/NicoKempeEU/discord-bot/wiki/%F0%9F%8C%9F-Features)** wiki page.
 
 ---
 
@@ -49,19 +35,18 @@ In this repository we keep the current state of development of the Discord Bot m
 
 ---
 
-### 📋 Credits and often used Dependencies
-- **[Vue.js](https://vuejs.org/)** is used to build the **[FrontEnd](https://github.com/NicoKempeEU/discord-bot/blob/main/website)**.
+### 📋 Credits and Dependencies
+- **[Vue.js](https://vuejs.org/)** and **[Tailwind CSS](https://tailwindcss.com/)** are used to build the **[FrontEnd](https://github.com/NicoKempeEU/discord-bot/blob/main/website)**.
 - **[Express.js](https://expressjs.com/)** is used to build the **[BackEnd](https://github.com/NicoKempeEU/discord-bot/blob/main/server)**.
 - **[Java](https://java.com/)** and the **[Java Discord API](https://github.com/DV8FromTheWorld/JDA)** are used to build the **[Discord Bot](https://github.com/NicoKempeEU/discord-bot/blob/main/bot)**
 
+The full credits and dependencies can be found on the **[📋 Credits and Dependencies](https://github.com/NicoKempeEU/discord-bot/wiki/%F0%9F%93%8B-Credits-and-Dependencies)** wiki page.
+
+
 ---
 
-### ⬇️ Installation
-Install [GitHub Desktop](https://desktop.github.com/), click on the green "Code" button in this project on top of the file viewer. Click on the [Open with GitHub Desktop](x-github-client://openRepo/https://github.com/NicoKempeEU/discord-bot) button. Then set a file path where you would like to have saved the project. Then the GitHub desktop program suggests the options "Open in Visual Studio Code" and "Show in Explorer". Select the options that suit you and open the project with your favorite code editor. Then you simply open the terminal and carry out the commands of your choice. You have to build the following programs:
-- Discord Bot
-- Website FrontEnd
-- Website BackEnd
-
+### ⬇️ Setup
+The entire setup process can be found on the **[⬇️ Setup](https://github.com/NicoKempeEU/discord-bot/wiki/%E2%AC%87%EF%B8%8F-Setup)** wiki page.
 
 ### Discord
 [![Discord Server](https://discordapp.com/api/guilds/528350750825512988/widget.png?style=banner2)](https://discord.com/invite/t9frQmmqPe)
