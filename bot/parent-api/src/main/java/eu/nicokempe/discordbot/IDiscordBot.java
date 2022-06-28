@@ -1,7 +1,9 @@
 package eu.nicokempe.discordbot;
 
 import com.google.gson.*;
+import eu.nicokempe.discordbot.adapter.InterfaceAdapter;
 import eu.nicokempe.discordbot.command.handler.ICommandManager;
+import eu.nicokempe.discordbot.command.handler.action.CommandAction;
 import eu.nicokempe.discordbot.config.IConfigObject;
 import eu.nicokempe.discordbot.config.JsonConfig;
 import eu.nicokempe.discordbot.module.IModuleLoader;
@@ -17,7 +19,7 @@ import java.util.List;
 
 public interface IDiscordBot {
 
-    Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+    Gson GSON = new GsonBuilder().registerTypeAdapter(CommandAction.class, new InterfaceAdapter<CommandAction>()).setPrettyPrinting().create();
 
     void enable();
 
@@ -25,7 +27,7 @@ public interface IDiscordBot {
 
     void loadModules();
 
-    long getGuildId();
+    String getGuildId();
 
     void setGuild(Guild guild);
 
