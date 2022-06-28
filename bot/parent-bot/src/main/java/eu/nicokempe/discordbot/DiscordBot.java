@@ -3,10 +3,7 @@ package eu.nicokempe.discordbot;
 import com.google.gson.Gson;
 import eu.nicokempe.discordbot.command.handler.ICommandManager;
 import eu.nicokempe.discordbot.command.manager.CommandManager;
-import eu.nicokempe.discordbot.config.ConfigObject;
-import eu.nicokempe.discordbot.config.ConfigWrapper;
-import eu.nicokempe.discordbot.config.IConfigObject;
-import eu.nicokempe.discordbot.config.JsonConfig;
+import eu.nicokempe.discordbot.config.*;
 import eu.nicokempe.discordbot.listener.JoinListener;
 import eu.nicokempe.discordbot.listener.ReadyListener;
 import eu.nicokempe.discordbot.listener.SlashListener;
@@ -87,6 +84,10 @@ public class DiscordBot implements IDiscordBot {
                     e.printStackTrace();
                 }
                 updateTask = new UpdateTask();
+
+                defaultConfig = new ConfigObject();
+                defaultConfig.load("default");
+
                 init();
             } else {
                 System.out.println("Login failed");
@@ -160,17 +161,14 @@ public class DiscordBot implements IDiscordBot {
 
         timer.schedule(updateTask, 0, 5 * 1000);
 
-        defaultConfig = new ConfigObject();
-        defaultConfig.load("default");
-
         int took = Math.toIntExact((System.currentTimeMillis() - start) / 1000);
         int rest = Math.toIntExact((System.currentTimeMillis() - start) % 1000);
         System.out.println(MessageFormat.format("Loading complete! (Took {1},{2}s)", DiscordBot.INSTANCE.getUsers().size(), took, rest));
     }
 
     @Override
-    public long getGuildId() {
-        return RequestBuilder.builder().route("guild").build().get().getAsJsonObject().get("guildId").getAsLong();
+    public String getGuildId() {
+        return defaultConfig.getValue(DefaultConfigValue.GUILD_ID);
     }
 
     @Override

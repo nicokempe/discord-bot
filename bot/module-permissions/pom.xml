@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>permissions-module</artifactId>
+    <artifactId>module-permissions</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -19,7 +19,7 @@
     <dependencies>
         <dependency>
             <groupId>eu.nicokempe</groupId>
-            <artifactId>permissions-module-api</artifactId>
+            <artifactId>module-permissions-api</artifactId>
             <version>2022.6.1-dev</version>
         </dependency>
     </dependencies>

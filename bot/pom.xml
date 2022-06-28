@@ -18,6 +18,12 @@
         <module>module-messenger-api</module>
         <module>module-backup</module>
         <module>module-backup-api</module>
+        <module>module-leveling</module>
+        <module>module-leveling-api</module>
+        <module>module-maintenance</module>
+        <module>module-maintenance-api</module>
+        <module>module-commands</module>
+        <module>module-commands-api</module>
     </modules>
 
     <properties>

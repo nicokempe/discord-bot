@@ -14,8 +14,12 @@ public class Logger {
 
             @Override
             public void println(String x) {
-                String message = MessageFormat.format("[{0}] " + x, dateFormat.format(System.currentTimeMillis()));
-                super.println(message);
+                try {
+                    String message = MessageFormat.format("[{0}] " + x, dateFormat.format(System.currentTimeMillis()));
+                    super.println(message);
+                } catch (Exception e) {
+                    super.println(x);
+                }
             }
 
             @Override

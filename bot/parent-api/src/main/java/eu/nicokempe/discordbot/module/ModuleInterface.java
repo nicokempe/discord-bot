@@ -2,7 +2,6 @@ package eu.nicokempe.discordbot.module;
 
 import eu.nicokempe.discordbot.IDiscordBot;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.util.Properties;
