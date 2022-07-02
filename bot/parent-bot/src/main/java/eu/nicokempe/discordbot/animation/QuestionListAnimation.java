@@ -1,9 +1,9 @@
 package eu.nicokempe.discordbot.animation;
 
-import eu.nicokempe.discordbot.animation.asnwer.QuestionAnswerType;
+import eu.nicokempe.discordbot.animation.answer.QuestionAnswerType;
+import eu.nicokempe.discordbot.animation.answer.QuestionAnswerTypeInt;
 import eu.nicokempe.discordbot.animation.task.ITask;
 import eu.nicokempe.discordbot.animation.task.ListenableTask;
-import eu.nicokempe.discordbot.command.manager.CommandManager;
 import eu.nicokempe.discordbot.user.IDiscordUser;
 import lombok.Getter;
 
@@ -84,6 +84,7 @@ public class QuestionListAnimation extends AbstractAnimation {
         }
         return false;
     }
+
     public void addEntryCompletionListener(BiConsumer<QuestionListEntry<?>, Object> listener) {
         this.entryCompletionListeners.add(listener);
     }
@@ -140,10 +141,14 @@ public class QuestionListAnimation extends AbstractAnimation {
                         getDiscordPlayer().sendPrivateMessage("Diese Antwortmöglichkeit gibt es nicht!");
                 case NOT_A_NUMBER -> getDiscordPlayer().sendPrivateMessage("Bitte gebe eine echte Zahl an!");
                 case ANSWER_EMPTY -> getDiscordPlayer().sendPrivateMessage("Bitte gebe eine richte Antwort an!");
+                case NUMBER_OUT_OF_RANGE -> {
+                    int max = ((QuestionAnswerTypeInt) answerType).getMax();
+                    int min = ((QuestionAnswerTypeInt) answerType).getMin();
+                    getDiscordPlayer().sendPrivateMessage("Die Zahl darf nur zwischen " + ((min == 0 ? "-" : min)) + " und " + (max == 0 ? "-" : max) + " liegen!");
+                }
             }
-            return false;
         }
-
+        return false;
     }
 
     public boolean hasResult(String key) {

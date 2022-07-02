@@ -3,10 +3,10 @@ package eu.nicokempe.discordbot.command;
 import eu.nicokempe.discordbot.animation.AbstractAnimation;
 import eu.nicokempe.discordbot.animation.QuestionListAnimation;
 import eu.nicokempe.discordbot.animation.QuestionListEntry;
-import eu.nicokempe.discordbot.animation.asnwer.QuestionAnswerTypeCollection;
-import eu.nicokempe.discordbot.animation.asnwer.QuestionAnswerTypeEmail;
-import eu.nicokempe.discordbot.animation.asnwer.QuestionAnswerTypeInt;
-import eu.nicokempe.discordbot.animation.asnwer.QuestionAnswerTypeString;
+import eu.nicokempe.discordbot.animation.answer.QuestionAnswerTypeCollection;
+import eu.nicokempe.discordbot.animation.answer.QuestionAnswerTypeEmail;
+import eu.nicokempe.discordbot.animation.answer.QuestionAnswerTypeInt;
+import eu.nicokempe.discordbot.animation.answer.QuestionAnswerTypeString;
 import eu.nicokempe.discordbot.user.IDiscordUser;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
@@ -38,7 +38,7 @@ public class TestCommand extends AbstractCommand {
         animation.addEntry(new QuestionListEntry<>(
                 "age",
                 "Gib jetzt dein Alter an",
-                new QuestionAnswerTypeInt()
+                new QuestionAnswerTypeInt().range(16, 0)
         ));
         animation.addEntry(new QuestionListEntry<>(
                 "email",

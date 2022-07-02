@@ -35,6 +35,7 @@ public abstract class AbstractAnimation implements Runnable {
     public static final int NOT_A_NUMBER = 3;
     public static final int LIST_NOT_CONTAINS = 4;
     public static final int ANSWER_EMPTY = 5;
+    public static final int NUMBER_OUT_OF_RANGE = 6;
 
     private int updateInterval = 25;
     private long startTime;
