@@ -1,4 +1,4 @@
-package eu.nicokempe.discordbot.animation.asnwer;
+package eu.nicokempe.discordbot.animation.answer;
 
 import java.util.Collection;
 import java.util.List;
