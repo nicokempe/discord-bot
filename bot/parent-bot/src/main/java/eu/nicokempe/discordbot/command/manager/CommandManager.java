@@ -53,9 +53,8 @@ public class CommandManager implements ICommandManager {
         }
         CommandListUpdateAction commands = DiscordBot.INSTANCE.getGuild().updateCommands();
         for (AbstractCommand abstractCommand : queue) {
-            commands.addCommands(toData(abstractCommand));
+            commands.addCommands(toData(abstractCommand)).queue();
         }
-        commands.queue();
         System.out.println(MessageFormat.format("{0} command(s) were successfully loaded!", queue.size()));
     }
 

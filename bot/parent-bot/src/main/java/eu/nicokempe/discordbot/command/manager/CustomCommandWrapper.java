@@ -7,6 +7,7 @@ import eu.nicokempe.discordbot.command.handler.action.message.EmbedMessage;
 import eu.nicokempe.discordbot.command.handler.action.message.Footer;
 import eu.nicokempe.discordbot.command.handler.action.message.Message;
 import eu.nicokempe.discordbot.command.handler.action.message.MessageAction;
+import eu.nicokempe.discordbot.command.handler.action.message.pmessage.PrivateMessageAction;
 import eu.nicokempe.discordbot.user.IDiscordUser;
 import lombok.NonNull;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -35,7 +36,10 @@ public class CustomCommandWrapper extends AbstractCommand {
                     String messageString = message.getMessage();
                     messageString = replace(messageString, new Placeholder("%user.nickname%", user.getNickname()), new Placeholder("%user.name%", user.getName()), new Placeholder("%user.avatar%", user.getUser().getAvatarUrl() == null ? "null" : user.getUser().getAvatarUrl()));
 
-                    event.reply(messageString).setEphemeral(message.isEphemeral()).queue();
+                    if (messageAction instanceof PrivateMessageAction)
+                        user.sendPrivateMessage(messageString);
+                    else
+                        event.reply(messageString).setEphemeral(message.isEphemeral()).queue();
                 } else {
                     EmbedMessage embedMessage = message.getEmbedBuilder();
 
@@ -59,7 +63,10 @@ public class CustomCommandWrapper extends AbstractCommand {
                         embedBuilder.setFooter(footer.getText(), footer.getAvatarUrl());
                     embedBuilder.setColor(embedMessage.getColor());
 
-                    event.replyEmbeds(embedBuilder.build()).setEphemeral(message.isEphemeral()).queue();
+                    if (messageAction instanceof PrivateMessageAction)
+                        user.sendPrivateMessage(embedBuilder.build());
+                    else
+                        event.replyEmbeds(embedBuilder.build()).setEphemeral(message.isEphemeral()).queue();
 
                 }
             }

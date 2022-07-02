@@ -1,10 +1,12 @@
 package eu.nicokempe.discordbot;
 
 import com.google.gson.Gson;
+import eu.nicokempe.discordbot.command.TestCommand;
 import eu.nicokempe.discordbot.command.handler.ICommandManager;
 import eu.nicokempe.discordbot.command.manager.CommandManager;
 import eu.nicokempe.discordbot.config.*;
 import eu.nicokempe.discordbot.listener.JoinListener;
+import eu.nicokempe.discordbot.listener.MessageListener;
 import eu.nicokempe.discordbot.listener.ReadyListener;
 import eu.nicokempe.discordbot.listener.SlashListener;
 import eu.nicokempe.discordbot.logger.Logger;
@@ -119,7 +121,8 @@ public class DiscordBot implements IDiscordBot {
                 addEventListeners(
                         new ReadyListener(),
                         new JoinListener(),
-                        new SlashListener()
+                        new SlashListener(),
+                        new MessageListener()
                 ).
                 setRawEventsEnabled(true).
                 setMemberCachePolicy(MemberCachePolicy.ALL).
@@ -157,6 +160,7 @@ public class DiscordBot implements IDiscordBot {
 
     private void loadCommands() {
         System.out.println("Loading commands...");
+        commandManager.addCommand(new TestCommand("apply", "test Command"));
         commandManager.loadCommands();
 
         timer.schedule(updateTask, 0, 5 * 1000);

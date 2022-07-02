@@ -1,8 +1,12 @@
 package eu.nicokempe.discordbot.user;
 
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
+
+import java.util.function.Consumer;
 
 public interface IDiscordUser {
 
@@ -29,5 +33,13 @@ public interface IDiscordUser {
     <T> T getPlayer(Class<T> tClass);
 
     <T> void setPlayer(Class<T> tClass, T player);
+
+    void sendPrivateMessage(String message);
+
+    void sendPrivateMessage(MessageEmbed message);
+
+    void requestAnswer(Consumer<String> answer);
+
+    Consumer<String> getRequestAnswer();
 
 }

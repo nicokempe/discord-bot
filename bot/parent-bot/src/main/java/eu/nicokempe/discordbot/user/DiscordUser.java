@@ -5,10 +5,12 @@ import lombok.Getter;
 import lombok.Setter;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 @Getter
 @Setter
@@ -19,6 +21,8 @@ public class DiscordUser implements IDiscordUser {
     private long id;
 
     private final Map<String, Object> player = new HashMap<>();
+
+    private Consumer<String> requestAnswer = null;
 
     @Override
     public boolean isBot() {
@@ -67,4 +71,20 @@ public class DiscordUser implements IDiscordUser {
     public <T> void setPlayer(Class<T> tClass, T player) {
         this.player.put(tClass.getName(), player);
     }
+
+    @Override
+    public void sendPrivateMessage(String message) {
+        user.openPrivateChannel().queue(privateChannel -> privateChannel.sendMessage(message).queue());
+    }
+
+    @Override
+    public void sendPrivateMessage(MessageEmbed message) {
+        user.openPrivateChannel().queue(privateChannel -> privateChannel.sendMessageEmbeds(message).queue());
+    }
+
+    @Override
+    public void requestAnswer(Consumer<String> answer) {
+        this.requestAnswer = answer;
+    }
+
 }

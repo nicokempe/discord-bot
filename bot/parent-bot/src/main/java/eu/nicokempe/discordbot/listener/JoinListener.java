@@ -1,6 +1,7 @@
 package eu.nicokempe.discordbot.listener;
 
 import eu.nicokempe.discordbot.DiscordBot;
+import eu.nicokempe.discordbot.config.DefaultConfigValue;
 import eu.nicokempe.discordbot.request.RequestBuilder;
 import eu.nicokempe.discordbot.user.DiscordUser;
 import eu.nicokempe.discordbot.user.IDiscordUser;
@@ -24,5 +25,8 @@ public class JoinListener extends ListenerAdapter {
         IDiscordUser discordUser = new DiscordUser();
         discordUser.load(user.getIdLong());
         DiscordBot.INSTANCE.getUsers().add(discordUser);
+
+        if (DiscordBot.INSTANCE.getNewConfigObject().getValue(DefaultConfigValue.WELCOME_MESSAGE_ENABLED))
+            event.getGuild().getTextChannelById(DiscordBot.INSTANCE.getNewConfigObject().getValue(DefaultConfigValue.WELCOME_LEAVE_MESSAGE_CHANNEL)).sendMessage(DiscordBot.INSTANCE.getNewConfigObject().getValue(DefaultConfigValue.WELCOME_MESSAGE)).queue();
     }
 }
