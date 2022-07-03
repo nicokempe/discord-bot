@@ -18,6 +18,15 @@
 Our Code of Conduct can be found in the GitHub docs directory:
 * [Code of Conduct](https://github.com/NicoKempeEU/discord-bot/blob/main/docs/code_of_conduct.md)
 
+## Branches
+| **Branch name**           | **Prefix** | **Usage**                                                                  | **Example**                                   |
+|---------------------------|------------|----------------------------------------------------------------------------|-----------------------------------------------|
+| Main Branch               | main       | (Unique Stable) Main Branch (Current development version)                  | There is only one of this branch: main.       |
+| Production release Branch | production | (Unique Stable) Production Branch (Automatically deployed content)         | There is only one of this branch: production. |
+| Release Branch            | release/   | Completed releases that are named by the time. (YEAR.MONTH.VERSION_NUMBER) | release/2022.7.4                              |
+| Feature Branch            | feature/   | The feature branch only comes with major updates that are being worked on. | feature/ux-update                             |
+| Bug(fix) Branch           | fix/       | The name should speak for itself: currently fixed bugs.                    | fix/footer-position-fix                       |
+
 ## Labels
 | **Label**                                                                                                         | **Explanation**                               | **Usage** | **Example**                                   |
 |-------------------------------------------------------------------------------------------------------------------|-----------------------------------------------|-----------|-----------------------------------------------|
