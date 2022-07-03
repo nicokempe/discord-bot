@@ -14,6 +14,10 @@
 * Labels
 * Further questions
 
+## Code of Conduct
+Our Code of Conduct can be found in the GitHub docs directory:
+* [Code of Conduct](https://github.com/NicoKempeEU/discord-bot/blob/main/docs/code_of_conduct.md)
+
 ## Further questions
 > Note: please don't open issues to ask questions. Use the resources below
 * Information and Tutorials can be found in our **[GitHub Wiki](https://github.com/NicoKempeEU/discord-bot/wiki)**.
