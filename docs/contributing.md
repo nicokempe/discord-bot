@@ -1,18 +1,18 @@
 # Contributing to the Discord Bot Open Source Project
 
 ## Table of Contents
-* Code of Conduct
-* Contributing
-  * Reporting bugs
-  * Request features
-  * Reporting security gaps
-  * Code Contributions
-* Styleguides
-  * Git Commit Messages
-  * Pull Requests
-* Branches
-* Labels
-* Further questions
+* [Code of Conduct](https://github.com/NicoKempeEU/discord-bot/blob/main/docs/contributing.md#request-features)
+* [Contributing](https://github.com/NicoKempeEU/discord-bot/blob/main/docs/contributing.md#contributing)
+  * [Reporting bugs](https://github.com/NicoKempeEU/discord-bot/blob/main/docs/contributing.md#reporting-bugs)
+  * [Request features](https://github.com/NicoKempeEU/discord-bot/blob/main/docs/contributing.md#request-features)
+  * [Reporting security gaps](https://github.com/NicoKempeEU/discord-bot/blob/main/docs/contributing.md#reporting-security-gaps)
+  * [Code Contributions](https://github.com/NicoKempeEU/discord-bot/blob/main/docs/contributing.md#code-contributions)
+* [Styleguides](https://github.com/NicoKempeEU/discord-bot/blob/main/docs/contributing.md#styleguides)
+  * [Git Commit Messages](https://github.com/NicoKempeEU/discord-bot/blob/main/docs/contributing.md#git-commit-messages)
+  * [Pull Requests](https://github.com/NicoKempeEU/discord-bot/blob/main/docs/contributing.md#pull-requests)
+* [Branches](https://github.com/NicoKempeEU/discord-bot/blob/main/docs/contributing.md#branches)
+* [Labels](https://github.com/NicoKempeEU/discord-bot/blob/main/docs/contributing.md#labels)
+* [Further questions](https://github.com/NicoKempeEU/discord-bot/blob/main/docs/contributing.md#further-questions)
 
 ## Code of Conduct
 Our Code of Conduct can be found in the GitHub docs directory:
