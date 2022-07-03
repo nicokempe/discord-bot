@@ -36,6 +36,24 @@ We provide a separate page for reporting critical bugs. In our [Security Policy]
 ### Code Contributions
 As long as the code works and is understandable, nothing else should be considered apart from the usual conventions of the respective programming language.
 
+## Styleguides
+
+### Git Commit Messages
+We follow a recommendation from [cbeams](https://cbea.ms/author/cbeams/) when creating commit messages. He created a [blog post](https://cbea.ms/git-commit/) in which he explains how to write your commit messages.
+
+In summary, follow his seven rules of a great Git commit message:
+* [Separate subject from body with a blank line](https://cbea.ms/git-commit/#separate)
+* [Limit the subject line to 50 characters](https://cbea.ms/git-commit/#limit-50)
+* [Capitalize the subject line](https://cbea.ms/git-commit/#capitalize)
+* [Do not end the subject line with a period](https://cbea.ms/git-commit/#end)
+* [Use the imperative mood in the subject line](https://cbea.ms/git-commit/#imperative)
+* [Wrap the body at 72 characters](https://cbea.ms/git-commit/#wrap-72)
+* [Use the body to explain what and why vs. how](https://cbea.ms/git-commit/#why-not-how)
+
+### Pull Requests
+When creating pull requests, you will automatically receive our template. Stick to this format and record the most important information clearly.
+> Note: If your pull request is related to an issue, don't forget to link it. 
+
 ## Branches
 | **Branch name**           | **Prefix** | **Usage**                                                                  | **Example**                                   |
 |---------------------------|------------|----------------------------------------------------------------------------|-----------------------------------------------|
