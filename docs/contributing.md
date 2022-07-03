@@ -18,6 +18,24 @@
 Our Code of Conduct can be found in the GitHub docs directory:
 * [Code of Conduct](https://github.com/NicoKempeEU/discord-bot/blob/main/docs/code_of_conduct.md)
 
+## Contributing
+
+### Reporting bugs
+Before you open a issue, please check the following points:
+* Check the [Discussions](https://github.com/NicoKempeEU/discord-bot/discussions) and our [Wiki](https://github.com/NicoKempeEU/discord-bot/wiki) first to see if your problem has more information available.
+* Perform a [cursory search](https://github.com/NicoKempeEU/discord-bot/blob/main/docs/code_of_conduct.md) to see if your problem is already reported. If there is already a issue open leave a comment there instead of opening a new one. 
+
+If your problem still doesn't seem to be solved then create an issue using the "Bug Report" template.
+
+### Request features
+You can also access the GitHub Issues to suggest extensions for this project. There is also a form in which you will be guided through the required steps. So please use the [Feature Request issue template](https://github.com/NicoKempeEU/discord-bot/issues/new?assignees=&labels=%3Asparkles%3A+feature+request&template=feature_request.yml) to suggest requests for this project.
+
+### Reporting security gaps
+We provide a separate page for reporting critical bugs. In our [Security Policy](https://github.com/NicoKempeEU/discord-bot/security/policy) you will find all the information you need to understand this topic.
+
+### Code Contributions
+As long as the code works and is understandable, nothing else should be considered apart from the usual conventions of the respective programming language.
+
 ## Branches
 | **Branch name**           | **Prefix** | **Usage**                                                                  | **Example**                                   |
 |---------------------------|------------|----------------------------------------------------------------------------|-----------------------------------------------|
