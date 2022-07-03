@@ -54,6 +54,10 @@ In summary, follow his seven rules of a great Git commit message:
 When creating pull requests, you will automatically receive our template. Stick to this format and record the most important information clearly.
 > Note: If your pull request is related to an issue, don't forget to link it. 
 
+#### Here is a positive example of creating your pull request:
+[![security-policy-pull-request](https://user-images.githubusercontent.com/50241630/177031595-515251db-f73d-45e7-92cb-a3cdb4744132.png)](https://github.com/NicoKempeEU/discord-bot/pull/34)
+
+
 ## Branches
 | **Branch name**           | **Prefix** | **Usage**                                                                  | **Example**                                   |
 |---------------------------|------------|----------------------------------------------------------------------------|-----------------------------------------------|
