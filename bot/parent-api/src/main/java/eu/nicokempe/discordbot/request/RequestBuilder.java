@@ -15,6 +15,8 @@ import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.function.Consumer;
 
+import org.json.JSONObject;
+
 @Builder
 public class RequestBuilder {
 
@@ -22,15 +24,30 @@ public class RequestBuilder {
 
     private final String route;
     private final FormBody.Builder body;
+    private final JSONObject jsonBody;
     private final Consumer<Response> response;
     private final IDiscordBot.AuthKey authKey;
 
     public void post() {
-        if (authKey != null) body.add("authKey", authKey.getKey());
-        Request request = new Request.Builder()
-                .url(url + route)
-                .post(body.build())
-                .build();
+        if (authKey != null)
+            if (body != null)
+                body.add("authKey", authKey.getKey());
+            else
+                jsonBody.put("authKey", authKey.getKey());
+
+        Request request;
+        if (this.jsonBody == null) {
+            request = new Request.Builder()
+                    .url(url + route)
+                    .post(body.build())
+                    .build();
+        } else {
+            RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), this.jsonBody.toString());
+            request = new Request.Builder()
+                    .url(url + route)
+                    .post(body)
+                    .build();
+        }
         request(request);
     }
 
@@ -57,11 +74,7 @@ public class RequestBuilder {
         OkHttpClient httpClient = new OkHttpClient();
 
         try (Response response = httpClient.newCall(request).execute()) {
-            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
             if (this.response != null) this.response.accept(response);
-        } catch (SocketTimeoutException e) {
-            System.out.println("Timeout");
-            e.printStackTrace();
         }
     }
 

@@ -7,7 +7,7 @@
     <groupId>eu.nicokempe</groupId>
     <artifactId>DiscordBot</artifactId>
     <packaging>pom</packaging>
-    <version>2022.6.1-dev</version>
+    <version>2022.7.1-dev</version>
     <modules>
         <module>parent-api</module>
         <module>parent-bot</module>
@@ -24,11 +24,14 @@
         <module>module-maintenance-api</module>
         <module>module-commands</module>
         <module>module-commands-api</module>
+        <module>module-giveaway</module>
+        <module>module-giveaway-api</module>
     </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <repositories>
@@ -40,6 +43,19 @@
     </repositories>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/commons-validator/commons-validator -->
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>1.7</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20220320</version>
+        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

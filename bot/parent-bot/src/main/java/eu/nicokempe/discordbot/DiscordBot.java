@@ -27,6 +27,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import okhttp3.*;
+import org.json.JSONObject;
 
 import java.io.*;
 import java.nio.file.NoSuchFileException;
@@ -78,7 +79,7 @@ public class DiscordBot implements IDiscordBot {
 
         System.out.println("Logging in...");
         RequestBuilder.url = host;
-        RequestBuilder.builder().route("login").body(new FormBody.Builder().add("name", name).add("password", password)).response(response -> {
+        RequestBuilder.builder().route("login").jsonBody(new JSONObject().put("name", name).put("password", password)).response(response -> {
             if (response.isSuccessful()) {
                 try {
                     authKey = new Gson().fromJson(response.body().string(), AuthKey.class);
@@ -101,10 +102,12 @@ public class DiscordBot implements IDiscordBot {
     private void init() {
         start = System.currentTimeMillis();
         System.out.println("Loading bot...");
+        defaultConfig.setValue(DefaultConfigValue.LEAVE_MESSAGE, "NEIN!");
+        defaultConfig.update();
 
         commandManager = new CommandManager();
 
-        String token = getResourceFileAsString();
+        String token = config.getOrDefaultSet("token", String.class, "yourToken");
 
         EnumSet<GatewayIntent> intents = EnumSet.of(
                 GatewayIntent.GUILD_MESSAGES,
@@ -138,6 +141,7 @@ public class DiscordBot implements IDiscordBot {
     public void disable() {
         System.out.println("Disabling bot...");
         moduleLoader.disable();
+        defaultConfig.update();
         System.out.println("Goodbye!");
     }
 
@@ -199,17 +203,6 @@ public class DiscordBot implements IDiscordBot {
     @Override
     public IConfigObject getNewConfigObject() {
         return new ConfigObject();
-    }
-
-    private String getResourceFileAsString() throws IOException {
-        ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-        try (InputStream is = classLoader.getResourceAsStream("token.txt")) {
-            if (is == null) return null;
-            try (InputStreamReader isr = new InputStreamReader(is);
-                 BufferedReader reader = new BufferedReader(isr)) {
-                return reader.lines().collect(Collectors.joining(System.lineSeparator()));
-            }
-        }
     }
 
 }

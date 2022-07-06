@@ -5,7 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import eu.nicokempe.discordbot.DiscordBot;
 import eu.nicokempe.discordbot.request.RequestBuilder;
-import okhttp3.FormBody;
+import org.json.JSONObject;
 
 import java.util.List;
 import java.util.Map;
@@ -19,15 +19,17 @@ public class ConfigObject implements IConfigObject {
     public void load(String route) {
         this.route = route;
 
-        JsonObject element = RequestBuilder.builder().route(route + "/config").authKey(DiscordBot.INSTANCE.getAuthKey()).build().get().getAsJsonObject();
+        JsonObject element = RequestBuilder.builder().route("config?target=" + route).authKey(DiscordBot.INSTANCE.getAuthKey()).build().get().getAsJsonObject();
+
         configEntry = new Gson().fromJson(element.toString(), ConfigEntry.class);
     }
 
     @Override
     public void update() {
-        RequestBuilder.builder().route(route + "/config").authKey(DiscordBot.INSTANCE.getAuthKey()).response(response -> {
+        String entry = new Gson().toJson(configEntry);
+        RequestBuilder.builder().route("config?target=" + route).authKey(DiscordBot.INSTANCE.getAuthKey()).response(response -> {
 
-        }).body(new FormBody.Builder().add("config", new Gson().toJson(configEntry))).build().post();
+        })/*.body(new FormBody.Builder().add("config", new Gson().toJson(configEntry)))*/.jsonBody(new JSONObject().put("config", entry)).build().post();
     }
 
     @Override

@@ -104,6 +104,8 @@ public class TestCommand extends AbstractCommand {
             user.sendPrivateMessage(new EmbedBuilder().setDescription("Deine Bewerbung wurde erfolgreich abgeschickt.").setColor(Color.green).build());
         });
         animation.start();
-        event.replyEmbeds(new EmbedBuilder().setDescription("Bitte gehe in den Privatchat mit mir.").build()).queue();
+
+        event.replyEmbeds(new EmbedBuilder().setDescription("Bitte gehe in den Privatchat mit mir.").build()).setEphemeral(true).queue();
+
     }
 }

@@ -1,6 +1,6 @@
 package eu.nicokempe.discordbot.animation;
 
-import eu.nicokempe.discordbot.animation.asnwer.QuestionAnswerType;
+import eu.nicokempe.discordbot.animation.answer.QuestionAnswerType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

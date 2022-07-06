@@ -49,8 +49,6 @@ public interface IDiscordBot {
 
     AuthKey getAuthKey();
 
-    JsonConfig getConfig();
-
     UpdateTask getUpdateTask();
 
     IConfigObject getNewConfigObject();

@@ -52,6 +52,14 @@ public class JsonConfig {
         return IDiscordBot.GSON.fromJson(this.object.get(key), tClass);
     }
 
+    public <T> T getOrDefaultSet(String key, Class<T> tClass, T defaultValue) {
+        if (!this.object.has(key)) {
+            set(key, defaultValue);
+            saveConfig();
+        }
+        return IDiscordBot.GSON.fromJson(this.object.get(key), tClass);
+    }
+
     public <T> T set(String key, T t) {
         this.object.add(key, IDiscordBot.GSON.toJsonTree(t));
         return t;
