@@ -21,4 +21,8 @@ public interface IConfigObject {
 
     Map<ConfigValue<?>, Object> getSettingObjects();
 
+    <T> void register(ConfigValue<T> configValue);
+
+    boolean isValueSet(ConfigValue<?> setting);
+
 }

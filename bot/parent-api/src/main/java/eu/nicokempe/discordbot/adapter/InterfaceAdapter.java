@@ -10,7 +10,7 @@ public class InterfaceAdapter<T> implements JsonSerializer<T>, JsonDeserializer<
     public final JsonElement serialize(final T object, final Type interfaceType, final JsonSerializationContext context) {
         final JsonObject member = new JsonObject();
 
-        member.add("type", new JsonPrimitive(object.getClass().getName()));
+        member.add("_class", new JsonPrimitive(object.getClass().getName()));
         member.add("data", context.serialize(object));
 
         return member;
@@ -19,7 +19,7 @@ public class InterfaceAdapter<T> implements JsonSerializer<T>, JsonDeserializer<
     @Override
     public final T deserialize(final JsonElement elem, final Type interfaceType, final JsonDeserializationContext context) throws JsonParseException {
         final JsonObject member = (JsonObject) elem;
-        final JsonElement typeString = get(member, "type");
+        final JsonElement typeString = get(member, "_class");
         final JsonElement data = get(member, "data");
         final Type actualType = typeForName(typeString);
 

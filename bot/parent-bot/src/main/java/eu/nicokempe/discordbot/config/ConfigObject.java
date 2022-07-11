@@ -7,6 +7,7 @@ import eu.nicokempe.discordbot.DiscordBot;
 import eu.nicokempe.discordbot.request.RequestBuilder;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -59,6 +60,19 @@ public class ConfigObject implements IConfigObject {
 
     @Override
     public Map<ConfigValue<?>, Object> getSettingObjects() {
-        return null;
+        Map<ConfigValue<?>, Object> toReturn = new HashMap<>();
+        configEntry.getValues().forEach((setting, object) -> toReturn.put(ConfigWrapper.getValueByKey(setting), object));
+        return toReturn;
+    }
+
+    @Override
+    public <T> void register(ConfigValue<T> configValue) {
+        if (!isValueSet(configValue))
+            setValue(configValue, configValue.getDefaultValue());
+    }
+
+    @Override
+    public boolean isValueSet(ConfigValue<?> setting) {
+        return configEntry.getValues().containsKey(setting.getKey());
     }
 }

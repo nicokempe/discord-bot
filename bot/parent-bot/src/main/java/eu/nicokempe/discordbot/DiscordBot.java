@@ -90,6 +90,7 @@ public class DiscordBot implements IDiscordBot {
 
                 defaultConfig = new ConfigObject();
                 defaultConfig.load("default");
+                DefaultConfigValue.load(defaultConfig);
 
                 init();
             } else {
@@ -102,8 +103,6 @@ public class DiscordBot implements IDiscordBot {
     private void init() {
         start = System.currentTimeMillis();
         System.out.println("Loading bot...");
-        defaultConfig.setValue(DefaultConfigValue.LEAVE_MESSAGE, "NEIN!");
-        defaultConfig.update();
 
         commandManager = new CommandManager();
 
@@ -164,7 +163,7 @@ public class DiscordBot implements IDiscordBot {
 
     private void loadCommands() {
         System.out.println("Loading commands...");
-        commandManager.addCommand(new TestCommand("apply", "test Command"));
+        //commandManager.addCommand(new TestCommand("apply", "test Command"));
         commandManager.loadCommands();
 
         timer.schedule(updateTask, 0, 5 * 1000);

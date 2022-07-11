@@ -10,6 +10,7 @@ import lombok.Setter;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.*;
 import okhttp3.FormBody;
+import org.json.JSONObject;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -37,7 +38,7 @@ public class BackupObject implements IBackupObject {
             });
         }
 
-        for (JsonElement element : backupRequest.get("backups").getAsJsonArray()) {
+        for (JsonElement element : backupRequest.get("entries").getAsJsonArray()) {
             BackupEntry backup = new Gson().fromJson(element.getAsJsonObject().toString(), BackupEntry.class);
             backups.add(backup);
         }
@@ -49,9 +50,10 @@ public class BackupObject implements IBackupObject {
         RequestBuilder.builder()
                 .route("backups")
                 .authKey(Backup.INSTANCE.getDiscordBot().getAuthKey())
-                .body(
+                /*.body(
                         new FormBody.Builder()
-                                .add("backups", new Gson().toJson(new BackupLoadObject(backups, backupInterval, createNew))))
+                                .add("backups", new Gson().toJson(new BackupLoadObject(backups, backupInterval, createNew))))*/
+                .jsonBody(new JSONObject().put("backups", new Gson().toJson(new BackupLoadObject(backups, backupInterval, createNew))))
                 .build().post();
     }
 

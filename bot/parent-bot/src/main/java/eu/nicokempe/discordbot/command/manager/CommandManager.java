@@ -35,19 +35,20 @@ public class CommandManager implements ICommandManager {
     public void loadCommands() {
         loadCustomCommands();
         if (queue.isEmpty()) {
-            CustomCommand command = new CustomCommand("test", "Test Commmand", "-1", new MessageAction(
-                    List.of(
-                            new Message(
-                                    "Hallo %user.nickname%",
-                                    true,
-                                    new EmbedMessage(
-                                            536870911,
-                                            null,
-                                            new Footer("Sent from %user.name%", "%user.avatar%")
+            CustomCommand command = new CustomCommand("test", "Test Commmand", "-1",
+                    IDiscordBot.GSON.toJson(new MessageAction(
+                            List.of(
+                                    new Message(
+                                            "Hallo %user.nickname%",
+                                            true,
+                                            new EmbedMessage(
+                                                    536870911,
+                                                    null,
+                                                    new Footer("Sent from %user.name%", "%user.avatar%")
+                                            )
                                     )
                             )
-                    )
-            ));
+                    )));
             System.out.println(IDiscordBot.GSON.toJson(command));
             return;
         }

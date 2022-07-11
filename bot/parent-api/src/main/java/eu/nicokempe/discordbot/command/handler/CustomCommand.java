@@ -1,8 +1,13 @@
 package eu.nicokempe.discordbot.command.handler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import eu.nicokempe.discordbot.IDiscordBot;
 import eu.nicokempe.discordbot.command.handler.action.CommandAction;
+import eu.nicokempe.discordbot.user.IDiscordUser;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.SneakyThrows;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
 import java.util.ArrayList;
@@ -18,10 +23,15 @@ public class CustomCommand {
     private final List<String> permissionGroups = new ArrayList<>();
     private final List<OptionData> optionData = new ArrayList<>();
 
-    private final CommandAction commandAction;
+    private final String commandAction;
 
     public long getChannelLong() {
         return Long.parseLong(channel);
+    }
+
+    @SneakyThrows
+    public CommandAction getCommandAction() {
+        return IDiscordBot.GSON.fromJson(commandAction.replace("\n", ""), CommandAction.class);
     }
 
 }
