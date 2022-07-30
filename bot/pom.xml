@@ -20,6 +20,8 @@
         <module>module-backup-api</module>
         <module>module-maintenance</module>
         <module>module-maintenance-api</module>
+        <module>module-autochannel</module>
+        <module>module-autochannel-api</module>
     </modules>
 
     <properties>

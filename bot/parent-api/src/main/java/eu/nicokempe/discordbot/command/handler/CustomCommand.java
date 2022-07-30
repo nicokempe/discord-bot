@@ -31,6 +31,7 @@ public class CustomCommand {
 
     @SneakyThrows
     public CommandAction getCommandAction() {
+        if (commandAction == null) return null;
         return IDiscordBot.GSON.fromJson(commandAction.replace("\n", ""), CommandAction.class);
     }
 

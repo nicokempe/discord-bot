@@ -2,10 +2,13 @@ package eu.nicokempe.discordbot;
 
 import com.google.gson.*;
 import eu.nicokempe.discordbot.adapter.InterfaceAdapter;
+import eu.nicokempe.discordbot.channel.ChannelEntry;
 import eu.nicokempe.discordbot.command.handler.ICommandManager;
 import eu.nicokempe.discordbot.command.handler.action.CommandAction;
 import eu.nicokempe.discordbot.config.IConfigObject;
 import eu.nicokempe.discordbot.config.JsonConfig;
+import eu.nicokempe.discordbot.log.ILogObject;
+import eu.nicokempe.discordbot.log.type.LogType;
 import eu.nicokempe.discordbot.module.IModuleLoader;
 import eu.nicokempe.discordbot.update.UpdateTask;
 import eu.nicokempe.discordbot.user.IDiscordUser;
@@ -15,17 +18,17 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import okhttp3.RequestBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface IDiscordBot {
 
-    Gson GSON = new GsonBuilder().registerTypeAdapter(CommandAction.class, new InterfaceAdapter<CommandAction>()).setPrettyPrinting().create();
+    Gson GSON = new GsonBuilder().registerTypeAdapter(CommandAction.class, new InterfaceAdapter<CommandAction>()).registerTypeAdapter(LogType.class, new InterfaceAdapter<LogType>()).create();
+    public static final List<ChannelEntry> CHANNEL = new ArrayList<>();
 
     void enable();
 
     void disable();
-
-    void loadModules();
 
     String getGuildId();
 
@@ -33,9 +36,13 @@ public interface IDiscordBot {
 
     IModuleLoader getModuleLoader();
 
+    ILogObject getLogObject();
+
     Guild getGuild();
 
     JDA getJda();
+
+    IConfigObject getDefaultConfig();
 
     List<IDiscordUser> getUsers();
 
@@ -47,7 +54,7 @@ public interface IDiscordBot {
 
     ICommandManager getCommandManager();
 
-    AuthKey getAuthKey();
+    //AuthKey getAuthKey();
 
     UpdateTask getUpdateTask();
 

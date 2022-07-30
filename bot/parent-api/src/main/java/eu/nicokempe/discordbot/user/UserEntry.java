@@ -7,11 +7,14 @@ import lombok.Getter;
 @Getter
 public class UserEntry {
 
-    private final String id;
-    private final String avatar;
-    private final String userName, nickname;
-    private final long discordJoined;
-    private final boolean isBot;
+    private String id;
+    private String password;
+    private String key;
+    private String avatarUrl;
+    private String name, nickname;
+    private long discordJoined;
+    private boolean isBot;
+    private boolean owner = false;
 
     public long getIdLong() {
         return Long.parseLong(id);

@@ -28,7 +28,7 @@ public class BackupObject implements IBackupObject {
     @Override
     public void load() {
         backups.clear();
-        JsonObject backupRequest = RequestBuilder.builder().route("backups").authKey(Backup.INSTANCE.getDiscordBot().getAuthKey()).build().get().getAsJsonObject();
+        JsonObject backupRequest = RequestBuilder.builder().route("backups").authKey(Backup.INSTANCE.getAuthKey()).build().get().getAsJsonObject();
         backupInterval = backupRequest.get("backupInterval").getAsLong();
 
         if (backupRequest.get("createNew").getAsBoolean()) {
@@ -49,7 +49,7 @@ public class BackupObject implements IBackupObject {
     public void update() {
         RequestBuilder.builder()
                 .route("backups")
-                .authKey(Backup.INSTANCE.getDiscordBot().getAuthKey())
+                .authKey(Backup.INSTANCE.getAuthKey())
                 /*.body(
                         new FormBody.Builder()
                                 .add("backups", new Gson().toJson(new BackupLoadObject(backups, backupInterval, createNew))))*/

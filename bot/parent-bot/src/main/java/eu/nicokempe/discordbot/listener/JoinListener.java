@@ -2,6 +2,8 @@ package eu.nicokempe.discordbot.listener;
 
 import eu.nicokempe.discordbot.DiscordBot;
 import eu.nicokempe.discordbot.config.DefaultConfigValue;
+import eu.nicokempe.discordbot.log.data.LogEntry;
+import eu.nicokempe.discordbot.log.type.UserJoinType;
 import eu.nicokempe.discordbot.request.RequestBuilder;
 import eu.nicokempe.discordbot.user.DiscordUser;
 import eu.nicokempe.discordbot.user.IDiscordUser;
@@ -19,14 +21,17 @@ public class JoinListener extends ListenerAdapter {
         Member member = event.getMember();
         User user = member.getUser();
 
-        String avatar = user.getAvatarUrl() == null ? "" : user.getAvatarUrl();
-        RequestBuilder.builder().route("userJoin").body(new FormBody.Builder().add("name", user.getName()).add("discordId", user.getId()).add("avatar", avatar)).authKey(DiscordBot.INSTANCE.getAuthKey()).build().post();
+        DiscordBot.INSTANCE.getLogObject().saveLog(new LogEntry(user.getId()).logType(new UserJoinType()));
+        DiscordBot.INSTANCE.getLogObject().update();
+
+        //String avatar = user.getAvatarUrl() == null ? "" : user.getAvatarUrl();
+        //RequestBuilder.builder().route("userJoin").body(new FormBody.Builder().add("name", user.getName()).add("discordId", user.getId()).add("avatar", avatar)).authKey(DiscordBot.INSTANCE.getAuthKey()).build().post();
 
         IDiscordUser discordUser = new DiscordUser();
         discordUser.load(user.getIdLong());
         DiscordBot.INSTANCE.getUsers().add(discordUser);
 
-        if (DiscordBot.INSTANCE.getNewConfigObject().getValue(DefaultConfigValue.WELCOME_MESSAGE_ENABLED))
-            event.getGuild().getTextChannelById(DiscordBot.INSTANCE.getNewConfigObject().getValue(DefaultConfigValue.WELCOME_LEAVE_MESSAGE_CHANNEL)).sendMessage(DiscordBot.INSTANCE.getNewConfigObject().getValue(DefaultConfigValue.WELCOME_MESSAGE)).queue();
+        if (DiscordBot.INSTANCE.getDefaultConfig().getValue(DefaultConfigValue.WELCOME_MESSAGE_ENABLED))
+            event.getGuild().getTextChannelById(DiscordBot.INSTANCE.getDefaultConfig().getValue(DefaultConfigValue.WELCOME_LEAVE_MESSAGE_CHANNEL)).sendMessage(DiscordBot.INSTANCE.getDefaultConfig().getValue(DefaultConfigValue.WELCOME_MESSAGE)).queue();
     }
 }

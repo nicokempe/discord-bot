@@ -2,6 +2,8 @@ package eu.nicokempe.discordbot.listener;
 
 import eu.nicokempe.discordbot.DiscordBot;
 import eu.nicokempe.discordbot.command.AbstractCommand;
+import eu.nicokempe.discordbot.log.data.LogEntry;
+import eu.nicokempe.discordbot.log.type.CommandType;
 import eu.nicokempe.discordbot.user.IDiscordUser;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
@@ -22,6 +24,8 @@ public class SlashListener extends ListenerAdapter {
     public void onSlashCommand(SlashCommandEvent event) {
         AbstractCommand command = DiscordBot.INSTANCE.getCommandManager().getCommandByName(event.getName());
         if (command == null) return;
+        DiscordBot.INSTANCE.getLogObject().saveLog(new LogEntry(event.getUser().getId()).logType(new CommandType(event.getCommandString(), event.getChannelType(), event.getChannel().getId())));
+        DiscordBot.INSTANCE.getLogObject().update();
         if (command.getChannel() != -1 && command.getChannel() != event.getChannel().getIdLong()) {
             event.replyEmbeds(new EmbedBuilder().setColor(Color.red).setDescription("This command may only be executed in channel " + DiscordBot.INSTANCE.getGuild().getTextChannelById(command.getChannel()).getAsMention()).build()).setEphemeral(true).queue();
             return;

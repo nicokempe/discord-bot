@@ -26,7 +26,7 @@ public class PermissionModule extends ModuleInterface {
     public void enable() {
         getDiscordBot().getCommandManager().addCommand(new PushCommand("push"));
 
-        for (JsonElement roles : RequestBuilder.builder().route("roles").authKey(getDiscordBot().getAuthKey()).build().get().getAsJsonArray()) {
+        /*for (JsonElement roles : RequestBuilder.builder().route("roles").authKey(getDiscordBot().getAuthKey()).build().get().getAsJsonArray()) {
             JsonObject jsonObject = roles.getAsJsonObject();
             String id = jsonObject.get("id").getAsString();
             String name = jsonObject.get("name").getAsString();
@@ -47,7 +47,7 @@ public class PermissionModule extends ModuleInterface {
             }
 
             groups.add(group);
-        }
+        }*/
 
         loadMember();
 

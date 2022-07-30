@@ -30,6 +30,7 @@ public class CustomCommandWrapper extends AbstractCommand {
 
     @Override
     public void onExecute(IDiscordUser user, SlashCommandEvent event) {
+        if (customCommand.getCommandAction() == null) throw new NullPointerException("No command action defined.");
         if (customCommand.getCommandAction() instanceof MessageAction messageAction) {
             for (Message message : messageAction.getMessages()) {
                 if (message.getEmbedBuilder() == null) {

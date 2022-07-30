@@ -52,11 +52,26 @@ public class RequestBuilder {
     }
 
     public void put() {
-        if (authKey != null) body.add("authKey", authKey.getKey());
-        Request request = new Request.Builder()
-                .url(url + route)
-                .put(body.build())
-                .build();
+        if (authKey != null)
+            if (body != null)
+                body.add("authKey", authKey.getKey());
+            else
+                jsonBody.put("authKey", authKey.getKey());
+
+
+        Request request;
+        if (this.jsonBody == null) {
+            request = new Request.Builder()
+                    .url(url + route)
+                    .put(body.build())
+                    .build();
+        } else {
+            RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), this.jsonBody.toString());
+            request = new Request.Builder()
+                    .url(url + route)
+                    .put(body)
+                    .build();
+        }
         request(request);
     }
 
@@ -75,6 +90,8 @@ public class RequestBuilder {
 
         try (Response response = httpClient.newCall(request).execute()) {
             if (this.response != null) this.response.accept(response);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

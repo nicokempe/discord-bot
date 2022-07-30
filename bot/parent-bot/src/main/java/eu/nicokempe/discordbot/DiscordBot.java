@@ -9,6 +9,10 @@ import eu.nicokempe.discordbot.listener.JoinListener;
 import eu.nicokempe.discordbot.listener.MessageListener;
 import eu.nicokempe.discordbot.listener.ReadyListener;
 import eu.nicokempe.discordbot.listener.SlashListener;
+import eu.nicokempe.discordbot.log.ILogObject;
+import eu.nicokempe.discordbot.log.LogObject;
+import eu.nicokempe.discordbot.log.data.LogEntry;
+import eu.nicokempe.discordbot.log.type.StartUpType;
 import eu.nicokempe.discordbot.logger.Logger;
 import eu.nicokempe.discordbot.module.IModuleLoader;
 import eu.nicokempe.discordbot.module.ModuleLoader;
@@ -42,7 +46,7 @@ import java.util.stream.Collectors;
 @Setter
 public class DiscordBot implements IDiscordBot {
 
-    public static IDiscordBot INSTANCE;
+    public static DiscordBot INSTANCE;
     protected AuthKey authKey;
 
     private final List<IDiscordUser> discordUsers = new ArrayList<>();
@@ -50,6 +54,7 @@ public class DiscordBot implements IDiscordBot {
     private IModuleLoader moduleLoader;
     private ICommandManager commandManager;
     private IConfigObject defaultConfig;
+    private ILogObject logObject;
     private Timer timer = new Timer();
     private UpdateTask updateTask;
 
@@ -87,6 +92,8 @@ public class DiscordBot implements IDiscordBot {
                     e.printStackTrace();
                 }
                 updateTask = new UpdateTask();
+
+                logObject = new LogObject();
 
                 defaultConfig = new ConfigObject();
                 defaultConfig.load("default");
@@ -141,11 +148,11 @@ public class DiscordBot implements IDiscordBot {
         System.out.println("Disabling bot...");
         moduleLoader.disable();
         defaultConfig.update();
+        logObject.update();
         System.out.println("Goodbye!");
     }
 
     @SneakyThrows
-    @Override
     public void loadModules() {
         moduleLoader = new ModuleLoader();
         System.out.println("Loading modules...");
@@ -168,8 +175,12 @@ public class DiscordBot implements IDiscordBot {
 
         timer.schedule(updateTask, 0, 5 * 1000);
 
-        int took = Math.toIntExact((System.currentTimeMillis() - start) / 1000);
-        int rest = Math.toIntExact((System.currentTimeMillis() - start) % 1000);
+        long tookMillis = System.currentTimeMillis() - start;
+        logObject.saveLog(new LogEntry(getGuildId()).logType(new StartUpType(tookMillis)));
+        logObject.update();
+
+        int took = Math.toIntExact(tookMillis / 1000);
+        int rest = Math.toIntExact(tookMillis % 1000);
         System.out.println(MessageFormat.format("Loading complete! (Took {1},{2}s)", DiscordBot.INSTANCE.getUsers().size(), took, rest));
     }
 

@@ -12,6 +12,7 @@ public class ChannelEntry {
     private String name;
     private int position;
     private ChannelType channelType;
+    private boolean autoChannel = false;
 
     public long getIdLong() {
         return Long.parseLong(id);

@@ -34,7 +34,7 @@ public class MessageTask implements Runnable {
 
             if (schedule > System.currentTimeMillis()) return;
             guild.getTextChannelById(channel).sendMessage(message).queue();
-            RequestBuilder.builder().route("messages").body(new FormBody.Builder().add("id", id)).authKey(Messenger.INSTANCE.getDiscordBot().getAuthKey()).build().delete();
+            RequestBuilder.builder().route("messages").body(new FormBody.Builder().add("id", id)).authKey(Messenger.INSTANCE.getAuthKey()).build().delete();
         }
     }
 }
