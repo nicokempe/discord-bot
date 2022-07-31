@@ -3,6 +3,7 @@ package eu.nicokempe.discordbot;
 import com.google.gson.*;
 import eu.nicokempe.discordbot.adapter.InterfaceAdapter;
 import eu.nicokempe.discordbot.channel.ChannelEntry;
+import eu.nicokempe.discordbot.channel.IChannelObject;
 import eu.nicokempe.discordbot.command.handler.ICommandManager;
 import eu.nicokempe.discordbot.command.handler.action.CommandAction;
 import eu.nicokempe.discordbot.config.IConfigObject;
@@ -24,8 +25,6 @@ import java.util.List;
 public interface IDiscordBot {
 
     Gson GSON = new GsonBuilder().registerTypeAdapter(CommandAction.class, new InterfaceAdapter<CommandAction>()).registerTypeAdapter(LogType.class, new InterfaceAdapter<LogType>()).create();
-    public static final List<ChannelEntry> CHANNEL = new ArrayList<>();
-
     void enable();
 
     void disable();
@@ -43,6 +42,8 @@ public interface IDiscordBot {
     JDA getJda();
 
     IConfigObject getDefaultConfig();
+
+    IChannelObject getChannelObject();
 
     List<IDiscordUser> getUsers();
 

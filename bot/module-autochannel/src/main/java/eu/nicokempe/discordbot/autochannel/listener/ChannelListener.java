@@ -17,7 +17,7 @@ public class ChannelListener extends ListenerAdapter {
 
         if (autoChannelObject.isAutoChannel(newChannel.getIdLong()))
             autoChannelObject.createChannel(newChannel.getIdLong(), voiceChannel -> {
-
+                AutoChannel.INSTANCE.getDiscordBot().getGuild().moveVoiceMember(event.getMember(), voiceChannel).queue();
             });
 
     }

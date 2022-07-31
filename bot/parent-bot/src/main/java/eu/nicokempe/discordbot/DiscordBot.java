@@ -1,6 +1,8 @@
 package eu.nicokempe.discordbot;
 
 import com.google.gson.Gson;
+import eu.nicokempe.discordbot.channel.ChannelObject;
+import eu.nicokempe.discordbot.channel.IChannelObject;
 import eu.nicokempe.discordbot.command.TestCommand;
 import eu.nicokempe.discordbot.command.handler.ICommandManager;
 import eu.nicokempe.discordbot.command.manager.CommandManager;
@@ -54,6 +56,8 @@ public class DiscordBot implements IDiscordBot {
     private IModuleLoader moduleLoader;
     private ICommandManager commandManager;
     private IConfigObject defaultConfig;
+    private IChannelObject channelObject;
+
     private ILogObject logObject;
     private Timer timer = new Timer();
     private UpdateTask updateTask;
@@ -154,6 +158,9 @@ public class DiscordBot implements IDiscordBot {
 
     @SneakyThrows
     public void loadModules() {
+        channelObject = new ChannelObject();
+        channelObject.loadChannel();
+
         moduleLoader = new ModuleLoader();
         System.out.println("Loading modules...");
         moduleLoader.loadModules(e -> {

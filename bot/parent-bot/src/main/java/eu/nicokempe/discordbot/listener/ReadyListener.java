@@ -55,18 +55,7 @@ public class ReadyListener extends ListenerAdapter {
                             )).collect(Collectors.toList())
             );
 
-            IDiscordBot.CHANNEL.addAll(guild.getChannels().stream().map(guildChannel ->
-                    new ChannelEntry(
-                            guildChannel.getId(),
-                            guildChannel.getName(),
-                            guildChannel.getPosition(),
-                            guildChannel.getType(),
-                            false
-                    )).toList());
-            CurrentChannel currentChannel = new CurrentChannel(IDiscordBot.CHANNEL);
-
             RequestBuilder.builder().route("user").jsonBody(new JSONObject().put("member", new Gson().toJson(currentUser))).authKey(DiscordBot.INSTANCE.getAuthKey()).build().post();
-            RequestBuilder.builder().route("channel").jsonBody(new JSONObject().put("channel", new Gson().toJson(currentChannel))).authKey(DiscordBot.INSTANCE.getAuthKey()).build().post();
 
             DiscordBot.INSTANCE.loadModules();
         });
@@ -80,10 +69,4 @@ public class ReadyListener extends ListenerAdapter {
         private final long timestamp = System.currentTimeMillis();
     }
 
-    @RequiredArgsConstructor
-    @Getter
-    public class CurrentChannel {
-        private final List<ChannelEntry> entries;
-        private final long timestamp = System.currentTimeMillis();
-    }
 }
