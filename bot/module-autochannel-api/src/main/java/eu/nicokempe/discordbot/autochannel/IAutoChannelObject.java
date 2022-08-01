@@ -12,6 +12,8 @@ public interface IAutoChannelObject {
 
     boolean isAutoChannel(long id);
 
+    boolean isCreatedChannel(long id);
+
     void createChannel(long id, Consumer<VoiceChannel> created);
 
     void leaveChannel(long id);

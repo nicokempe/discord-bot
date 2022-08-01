@@ -1,6 +1,7 @@
 package eu.nicokempe.discordbot.autochannel;
 
 import eu.nicokempe.discordbot.autochannel.listener.ChannelListener;
+import eu.nicokempe.discordbot.autochannel.update.AutoChannelUpdater;
 import eu.nicokempe.discordbot.module.ModuleInterface;
 import lombok.Getter;
 
@@ -19,6 +20,8 @@ public class AutoChannel extends ModuleInterface {
     public void enable() {
         this.autoChannelObject = new AutoChannelObject();
         this.autoChannelObject.loadAutoChannel();
+
+        getDiscordBot().getUpdateTask().addTask(new AutoChannelUpdater());
 
         getDiscordBot().getJda().addEventListener(new ChannelListener());
     }
