@@ -3,8 +3,10 @@ package eu.nicokempe.discordbot.autochannel.listener;
 import eu.nicokempe.discordbot.autochannel.AutoChannel;
 import eu.nicokempe.discordbot.autochannel.IAutoChannelObject;
 import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.events.DisconnectEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceUpdateEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
@@ -24,6 +26,8 @@ public class ChannelListener extends ListenerAdapter {
 
     @Override
     public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event) {
+        System.out.println("Leave channel");
+
         VoiceChannel oldChannel = event.getChannelLeft();
         IAutoChannelObject autoChannelObject = AutoChannel.INSTANCE.getAutoChannelObject();
 
@@ -31,4 +35,6 @@ public class ChannelListener extends ListenerAdapter {
             autoChannelObject.leaveChannel(oldChannel.getIdLong());
         }
     }
+
+
 }

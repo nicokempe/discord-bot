@@ -24,7 +24,17 @@ public class AutoChannelObject implements IAutoChannelObject {
 
     @Override
     public boolean isAutoChannel(long id) {
-        return getAutoChannel(id) != null;
+        ChannelEntry entry = getAutoChannel(id);
+        boolean isCreatedChannel = false;
+        for (List<Long> value : activeChannel.values()) {
+            for (Long aLong : value) {
+                if (aLong == id) {
+                    isCreatedChannel = true;
+                    break;
+                }
+            }
+        }
+        return entry != null || isCreatedChannel;
     }
 
     @Override
@@ -34,7 +44,7 @@ public class AutoChannelObject implements IAutoChannelObject {
             activeChannel.put(id, new ArrayList<>());
         int channelSize = activeChannel.get(id).size() + 1;
         AutoChannel.INSTANCE.getDiscordBot().getGuild().createVoiceChannel(autoChannel.getName() + " " + intToRoman(channelSize)).queue(voiceChannel -> {
-             activeChannel.get(id).add(voiceChannel.getIdLong());
+            activeChannel.get(id).add(voiceChannel.getIdLong());
 
             System.out.println("Join channel");
 

@@ -91,6 +91,9 @@ public class RequestBuilder {
         try (Response response = httpClient.newCall(request).execute()) {
             if (this.response != null) this.response.accept(response);
         } catch (Exception e) {
+            if(e instanceof SocketTimeoutException) {
+                System.out.println("Server not available");
+            }
             e.printStackTrace();
         }
     }

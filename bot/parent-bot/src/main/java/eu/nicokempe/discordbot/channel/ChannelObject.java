@@ -28,14 +28,14 @@ public class ChannelObject implements IChannelObject {
             ChannelEntry entry = new Gson().fromJson(channel.getAsJsonObject().toString(), ChannelEntry.class);
             entries.add(entry);
             System.out.println(entry.getId());
-            if(entry.isAutoChannel())
+            if (entry.isAutoChannel())
                 System.out.println("auto channel");
         }
 
-        int size = entries.size();
+        boolean update = false;
 
         for (GuildChannel channel : DiscordBot.INSTANCE.getGuild().getChannels()) {
-            if(getChannelById(channel.getId()) == null) {
+            if (getChannelById(channel.getId()) == null) {
                 ChannelEntry entry = new ChannelEntry(
                         channel.getId(),
                         channel.getName(),
@@ -44,12 +44,18 @@ public class ChannelObject implements IChannelObject {
                         false,
                         true);
                 entries.add(entry);
-            } else {
-                
+                update = true;
             }
         }
 
-        if(size != entries.size()) {
+        for (ChannelEntry entry : entries) {
+            if (DiscordBot.INSTANCE.getGuild().getGuildChannelById(entry.getId()) == null) {
+                entry.setEnabled(false);
+                update = true;
+            }
+        }
+
+        if (update) {
             update();
         }
     }
