@@ -11,7 +11,7 @@ updates:
     reviewers:
       - "nicokempe"
     commit-message:
-      prefix: "[npm] "
+      prefix: "[actions] "
   - package-ecosystem: "docker"
     directory: "/agent"
     schedule:
@@ -23,9 +23,9 @@ updates:
     reviewers:
       - "nicokempe"
     commit-message:
-      prefix: "[npm] "
+      prefix: "[docker] "
   - package-ecosystem: "npm"
-    directory: "/agent"
+    directory: "/website"
     schedule:
       interval: "daily"
       time: "09:00"
@@ -43,9 +43,9 @@ updates:
       time: "09:00"
       timezone: "Europe/Berlin"
     assignees:
-      - "nicokempe"
+      - "tylix"
     reviewers:
-      - "nicokempe"
+      - "tylix"
     commit-message:
       prefix: "[maven] "
   - package-ecosystem: "maven"
@@ -55,8 +55,8 @@ updates:
       time: "09:00"
       timezone: "Europe/Berlin"
     assignees:
-      - "nicokempe"
+      - "tylix"
     reviewers:
-      - "nicokempe"
+      - "tylix"
     commit-message:
       prefix: "[maven] "
