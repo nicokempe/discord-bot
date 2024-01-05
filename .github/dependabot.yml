@@ -6,15 +6,57 @@ updates:
       interval: "daily"
       time: "09:00"
       timezone: "Europe/Berlin"
-  - package-ecosystem: "npm"
-    directory: "/website"
+    assignees:
+      - "nicokempe"
+    reviewers:
+      - "nicokempe"
+    commit-message:
+      prefix: "[npm] "
+  - package-ecosystem: "docker"
+    directory: "/agent"
     schedule:
       interval: "daily"
       time: "09:00"
       timezone: "Europe/Berlin"
+    assignees:
+      - "nicokempe"
+    reviewers:
+      - "nicokempe"
+    commit-message:
+      prefix: "[npm] "
+  - package-ecosystem: "npm"
+    directory: "/agent"
+    schedule:
+      interval: "daily"
+      time: "09:00"
+      timezone: "Europe/Berlin"
+    assignees:
+      - "nicokempe"
+    reviewers:
+      - "nicokempe"
+    commit-message:
+      prefix: "[npm] "
+  - package-ecosystem: "maven"
+    directory: "/server"
+    schedule:
+      interval: "daily"
+      time: "09:00"
+      timezone: "Europe/Berlin"
+    assignees:
+      - "nicokempe"
+    reviewers:
+      - "nicokempe"
+    commit-message:
+      prefix: "[maven] "
   - package-ecosystem: "maven"
     directory: "/bot"
     schedule:
       interval: "daily"
       time: "09:00"
       timezone: "Europe/Berlin"
+    assignees:
+      - "nicokempe"
+    reviewers:
+      - "nicokempe"
+    commit-message:
+      prefix: "[maven] "
